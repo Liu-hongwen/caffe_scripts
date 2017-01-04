@@ -1,0 +1,47 @@
+input: "data"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 473
+  dim: 473
+}
+input: "data_dim"
+input_shape {
+  dim: 1
+  dim: 1
+  dim: 1
+  dim: 2
+}
+input: "score"
+input_shape {
+  dim: 1
+  dim: 21
+  dim: 473
+  dim: 473
+}
+
+#### crf ###
+layer {
+  bottom: "score"
+  bottom: "data_dim"
+  bottom: "data"
+  top: "crf_inf"
+  name: "crf"
+  type: "DenseCRF"
+  dense_crf_param {
+     max_iter: 10
+     pos_w: 4
+     pos_xy_std: 1
+     bi_w: 5
+     bi_xy_std: 21
+     bi_rgb_std: 3
+  }
+}
+
+layer {
+  bottom: "crf_inf"
+  top: "prob"
+  name: "prob"
+  type: "Softmax"
+}
+
