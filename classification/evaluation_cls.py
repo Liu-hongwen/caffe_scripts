@@ -1,11 +1,11 @@
 import sys
+
 sys.path.append('/home/prmct/workspace/caffe-master-1202/python')
 
 import numpy as np
 import caffe
 import cv2
 import datetime
-
 
 gpu_mode = True
 gpu_id = 3
@@ -22,7 +22,7 @@ raw_scale = 1.0
 mean_value = np.array([128, 128, 128])
 top_k = (1, 5)
 class_offset = 0
-crop_num = 1	# 1 and others for single-crop, 12 for 12-crop, 144 for 144-crop
+crop_num = 1  # 1 and others for single-crop, 12 for 12-crop, 144 for 144-crop
 
 if gpu_mode:
     caffe.set_mode_gpu()
@@ -48,7 +48,7 @@ def eval_batch():
     start_time = datetime.datetime.now()
     for i in xrange(eval_len - skip_num):
         _img = cv2.imread(data_root + eval_images[i + skip_num])
-        
+
         score_vec = np.zeros(class_num, dtype=np.float32)
         crops = []
         if crop_num == 1:
@@ -79,17 +79,19 @@ def eval_batch():
     w = open(save_log, 'w')
     s1 = 'Evaluation process ends at: {}. \nTime cost is: {}. '.format(str(end_time), str(end_time - start_time))
     s2 = '\n{} images has been tested, crop_num is: {}, crop_size is: {}. \nThe model is: {}'.format(str(eval_len),
-                                                             str(crop_num), str(crop_size),model_weights)
+                                                                                                     str(crop_num),
+                                                                                                     str(crop_size),
+                                                                                                     model_weights)
     s3 = ''
     for i in xrange(len(top_k)):
         _acc = float(accuracy[i]) / float(eval_len)
         s3 += '\nAccuracy of top_{} is: {}; correct num is {}.'.format(str(top_k[i]), str(_acc), str(int(accuracy[i])))
     print s1, s2, s3
-    w.write(s1+s2+s3)
+    w.write(s1 + s2 + s3)
     w.close()
 
 
-def over_sample(img): # 12 crops of image
+def over_sample(img):  # 12 crops of image
     short_edge = min(img.shape[:2])
     if short_edge < crop_size:
         return
@@ -101,7 +103,7 @@ def over_sample(img): # 12 crops of image
     return sample_list
 
 
-def mirror_crop(img): # 12*len(size_list) crops
+def mirror_crop(img):  # 12*len(size_list) crops
     crop_list = []
     img_resize = cv2.resize(img, (base_size, base_size))
     mirror = img_resize[:, ::-1]
@@ -110,7 +112,7 @@ def mirror_crop(img): # 12*len(size_list) crops
     return crop_list
 
 
-def multi_crop(img): # 144(12*12) crops
+def multi_crop(img):  # 144(12*12) crops
     crop_list = []
     size_list = [256, 288, 320, 352]  # crop_size: 224
     # size_list = [270, 300, 330, 360]  # crop_size: 235
@@ -127,6 +129,7 @@ def multi_crop(img): # 144(12*12) crops
             crop_list.extend(over_sample(left_center_right))
             crop_list.extend(over_sample(mirror))
     return crop_list
+
 
 def caffe_process(_input):
     _input = np.asarray(_input, dtype=np.float32)
