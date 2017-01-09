@@ -8,10 +8,10 @@ import numpy as np
 import datetime
 
 gpu_mode = True
-gpu_id = 0
-data_root = '/home/gaia/Dataset/VOC_PASCAL/VOC2012_test/JPEGImages/'
+gpu_id = 3
+data_root = '/home/prmct/Database/VOC_PASCAL/VOC2012_test/JPEGImages/'
 val_file = 'test.txt'
-save_root = './ss/'
+save_root = './ms/'
 model_weights = 'pspnet101_VOC2012.caffemodel'
 model_deploy = 'pspnet101_VOC2012_473.prototxt'
 prob_layer = 'prob'  # output layer, normally Softmax
@@ -19,11 +19,15 @@ class_num = 21
 base_size = 512
 crop_size = 473
 raw_scale = 1.0  # image scale factor, 1.0 or 128.0
-mean_value = np.array([104.008, 116.669, 122.675])
-# scale_array = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]   # multi scale
-scale_array = [1.0]  # single scale
+# mean_value = np.array([104.008, 116.669, 122.675])
+mean_value = np.array([103.939, 116.779, 123.68])
+scale_array = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]   # multi scale
+# scale_array = [1.0]  # single scale
 flip = True
 class_offset = 0
+crf = False
+crf_deploy = '/home/prmct/Program/segmentation/deploy_crf.prototxt'
+crf_factor = 4.0
 
 if gpu_mode:
     caffe.set_mode_gpu()
@@ -31,6 +35,9 @@ if gpu_mode:
 else:
     caffe.set_mode_cpu()
 net = caffe.Net(model_deploy, model_weights, caffe.TEST)
+
+if crf:
+    net_crf = caffe.Net(crf_deploy, caffe.TEST)
 
 
 def eval_batch():
@@ -54,6 +61,18 @@ def eval_batch():
             _scale = cv2.resize(_img, new_size)
             score_map += cv2.resize(scale_process(_scale), (w, h))
         score_map /= len(scale_array)
+
+        if crf:
+            tmp_data = np.asarray([_img.transpose(2, 0, 1)], dtype=np.float32)
+            tmp_score = np.asarray([score_map.transpose(2, 0, 1)], dtype=np.float32)
+            net_crf.blobs['data'].reshape(*tmp_data.shape)
+            net_crf.blobs['data'].data[...] = tmp_data / raw_scale
+            net_crf.blobs['data_dim'].data[...] = [[[h, w]]]
+            net_crf.blobs['score'].reshape(*tmp_score.shape)
+            net_crf.blobs['score'].data[...] = tmp_score * crf_factor
+            net_crf.forward()
+            score_map = net_crf.blobs[prob_layer].data[0].transpose(1, 2, 0)
+
         cv2.imwrite(save_root + eval_images[i + skip_num] + '.png', score_map.argmax(2) + class_offset)
         print 'Testing image: ' + str(i + 1) + '/' + str(eval_len) + '  ' + str(eval_images[i + skip_num])
     end_time = datetime.datetime.now()
