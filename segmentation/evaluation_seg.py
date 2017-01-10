@@ -142,7 +142,7 @@ def caffe_process(_input):
         _flip = _flip.reshape((1,) + _flip.shape)
         net.blobs['data'].reshape(*_flip.shape)
         net.blobs['data'].data[...] = _flip / raw_scale
-        net.blobs['data_dim'].data[...] = [[[h, w]]]
+        # net.blobs['data_dim'].data[...] = [[[h, w]]]
         net.forward()
         _score += net.blobs[prob_layer].data[0].transpose(1, 2, 0)[:, ::-1]
 
@@ -150,7 +150,7 @@ def caffe_process(_input):
     _input = _input.reshape((1,) + _input.shape)
     net.blobs['data'].reshape(*_input.shape)
     net.blobs['data'].data[...] = _input / raw_scale
-    net.blobs['data_dim'].data[...] = [[[h, w]]]
+    # net.blobs['data_dim'].data[...] = [[[h, w]]]
     net.forward()
     _score += net.blobs[prob_layer].data[0].transpose(1, 2, 0)
 
