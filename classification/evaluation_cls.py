@@ -10,10 +10,10 @@ import datetime
 gpu_mode = True
 gpu_id = 3
 data_root = '/home/prmct/Database/ILSVRC2016'
-val_file = 'resnet101_v2/ILSVRC2012sub_val.txt'
+val_file = 'ilsvrc/ILSVRC2012sub_val.txt'
 save_log = 'log{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
-model_weights = 'resnet269_v2/resnet269_v2.caffemodel'
-model_deploy = 'resnet269_v2/deploy_resnet269_v2.prototxt'
+model_weights = 'ilsvrc/resnet_v2/resnet101_v2/resnet101_v2_iter_20000.caffemodel'
+model_deploy = 'ilsvrc/resnet_v2/resnet101_v2/deploy_resnet101_v2.prototxt'
 prob_layer = 'prob'
 class_num = 1000
 base_size = 256
@@ -22,7 +22,7 @@ raw_scale = 1.0
 mean_value = np.array([128, 128, 128])
 top_k = (1, 5)
 class_offset = 0
-crop_num = 1  # 1 and others for single-crop, 12 for 12-crop, 144 for 144-crop
+crop_num = 12  # 1 and others for single-crop, 12 for 12-crop, 144 for 144-crop
 
 if gpu_mode:
     caffe.set_mode_gpu()
@@ -64,7 +64,7 @@ def eval_batch():
             score_vec += caffe_process(j)
         score_index = (-score_vec).argsort()
 
-        print 'Testing image: ' + str(i + 1) + '/' + str(eval_len) + '  ' + str(score_index[0]) + '/' + str(
+        print 'Testing image: ' + str(i + 1) + '/' + str(eval_len - skip_num) + '  ' + str(score_index[0]) + '/' + str(
             ground_truth[i + skip_num]),
         for j in xrange(len(top_k)):
             if ground_truth[i + skip_num] in score_index[:top_k[j]]:
@@ -78,16 +78,15 @@ def eval_batch():
     end_time = datetime.datetime.now()
     w = open(save_log, 'w')
     s1 = 'Evaluation process ends at: {}. \nTime cost is: {}. '.format(str(end_time), str(end_time - start_time))
-    s2 = '\n{} images has been tested, crop_num is: {}, crop_size is: {}. \nThe model is: {}'.format(str(eval_len),
-                                                                                                     str(crop_num),
-                                                                                                     str(crop_size),
-                                                                                                     model_weights)
-    s3 = ''
+    s2 = '\nThe model is: {}. \nThe val file is: {}. \n{} images has been tested, crop_num is: {}, crop_size is: {}.'\
+        .format(model_weights, val_file, str(eval_len), str(crop_num), str(crop_size))
+    s3 = '\nThe mean value is: ({}, {}, {}).'.format(str(mean_value[0]), str(mean_value[1]), str(mean_value[2]))
+    s4 = ''
     for i in xrange(len(top_k)):
         _acc = float(accuracy[i]) / float(eval_len)
-        s3 += '\nAccuracy of top_{} is: {}; correct num is {}.'.format(str(top_k[i]), str(_acc), str(int(accuracy[i])))
-    print s1, s2, s3
-    w.write(s1 + s2 + s3)
+        s4 += '\nAccuracy of top_{} is: {}; correct num is {}.'.format(str(top_k[i]), str(_acc), str(int(accuracy[i])))
+    print s1, s2, s3, s4
+    w.write(s1 + s2 + s3 + s4)
     w.close()
 
 
