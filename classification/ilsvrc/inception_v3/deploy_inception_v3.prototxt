@@ -4668,7 +4668,7 @@ layer {
   top: "pool_8x8_s1"
   pooling_param {
     pool: AVE
-    kernel_size: 8
+    global_pooling: true
   }
 }
 layer {
