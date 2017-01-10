@@ -1,0 +1,10271 @@
+input: "data"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 224
+  dim: 224
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  convolution_param {
+    num_output: 64
+    bias_term: false
+    pad: 3
+    kernel_size: 7
+    stride: 2
+  }
+}
+layer {
+  name: "conv1_bn"
+  type: "BatchNorm"
+  bottom: "conv1"
+  top: "conv1"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "conv1_scale"
+  type: "Scale"
+  bottom: "conv1"
+  top: "conv1"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "conv1_relu"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "dense1a1_bn"
+  type: "BatchNorm"
+  bottom: "pool1"
+  top: "dense1a1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a1_scale"
+  type: "Scale"
+  bottom: "dense1a1_bn"
+  top: "dense1a1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a1_relu"
+  type: "ReLU"
+  bottom: "dense1a1_bn"
+  top: "dense1a1_bn"
+}
+layer {
+  name: "dense1a1_conv"
+  type: "Convolution"
+  bottom: "dense1a1_bn"
+  top: "dense1a1_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a1_dropout"
+  type: "Dropout"
+  bottom: "dense1a1_conv"
+  top: "dense1a1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b1_bn"
+  type: "BatchNorm"
+  bottom: "dense1a1_dropout"
+  top: "dense1b1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b1_scale"
+  type: "Scale"
+  bottom: "dense1b1_bn"
+  top: "dense1b1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b1_relu"
+  type: "ReLU"
+  bottom: "dense1b1_bn"
+  top: "dense1b1_bn"
+}
+layer {
+  name: "dense1b1_conv"
+  type: "Convolution"
+  bottom: "dense1b1_bn"
+  top: "dense1b1_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b1_dropout"
+  type: "Dropout"
+  bottom: "dense1b1_conv"
+  top: "dense1b1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b1_concat"
+  type: "Concat"
+  bottom: "pool1"
+  bottom: "dense1b1_dropout"
+  top: "dense1b1_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1a2_bn"
+  type: "BatchNorm"
+  bottom: "dense1b1_concat"
+  top: "dense1a2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a2_scale"
+  type: "Scale"
+  bottom: "dense1a2_bn"
+  top: "dense1a2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a2_relu"
+  type: "ReLU"
+  bottom: "dense1a2_bn"
+  top: "dense1a2_bn"
+}
+layer {
+  name: "dense1a2_conv"
+  type: "Convolution"
+  bottom: "dense1a2_bn"
+  top: "dense1a2_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a2_dropout"
+  type: "Dropout"
+  bottom: "dense1a2_conv"
+  top: "dense1a2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b2_bn"
+  type: "BatchNorm"
+  bottom: "dense1a2_dropout"
+  top: "dense1b2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b2_scale"
+  type: "Scale"
+  bottom: "dense1b2_bn"
+  top: "dense1b2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b2_relu"
+  type: "ReLU"
+  bottom: "dense1b2_bn"
+  top: "dense1b2_bn"
+}
+layer {
+  name: "dense1b2_conv"
+  type: "Convolution"
+  bottom: "dense1b2_bn"
+  top: "dense1b2_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b2_dropout"
+  type: "Dropout"
+  bottom: "dense1b2_conv"
+  top: "dense1b2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b2_concat"
+  type: "Concat"
+  bottom: "dense1b1_concat"
+  bottom: "dense1b2_dropout"
+  top: "dense1b2_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1a3_bn"
+  type: "BatchNorm"
+  bottom: "dense1b2_concat"
+  top: "dense1a3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a3_scale"
+  type: "Scale"
+  bottom: "dense1a3_bn"
+  top: "dense1a3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a3_relu"
+  type: "ReLU"
+  bottom: "dense1a3_bn"
+  top: "dense1a3_bn"
+}
+layer {
+  name: "dense1a3_conv"
+  type: "Convolution"
+  bottom: "dense1a3_bn"
+  top: "dense1a3_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a3_dropout"
+  type: "Dropout"
+  bottom: "dense1a3_conv"
+  top: "dense1a3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b3_bn"
+  type: "BatchNorm"
+  bottom: "dense1a3_dropout"
+  top: "dense1b3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b3_scale"
+  type: "Scale"
+  bottom: "dense1b3_bn"
+  top: "dense1b3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b3_relu"
+  type: "ReLU"
+  bottom: "dense1b3_bn"
+  top: "dense1b3_bn"
+}
+layer {
+  name: "dense1b3_conv"
+  type: "Convolution"
+  bottom: "dense1b3_bn"
+  top: "dense1b3_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b3_dropout"
+  type: "Dropout"
+  bottom: "dense1b3_conv"
+  top: "dense1b3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b3_concat"
+  type: "Concat"
+  bottom: "dense1b2_concat"
+  bottom: "dense1b3_dropout"
+  top: "dense1b3_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1a4_bn"
+  type: "BatchNorm"
+  bottom: "dense1b3_concat"
+  top: "dense1a4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a4_scale"
+  type: "Scale"
+  bottom: "dense1a4_bn"
+  top: "dense1a4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a4_relu"
+  type: "ReLU"
+  bottom: "dense1a4_bn"
+  top: "dense1a4_bn"
+}
+layer {
+  name: "dense1a4_conv"
+  type: "Convolution"
+  bottom: "dense1a4_bn"
+  top: "dense1a4_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a4_dropout"
+  type: "Dropout"
+  bottom: "dense1a4_conv"
+  top: "dense1a4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b4_bn"
+  type: "BatchNorm"
+  bottom: "dense1a4_dropout"
+  top: "dense1b4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b4_scale"
+  type: "Scale"
+  bottom: "dense1b4_bn"
+  top: "dense1b4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b4_relu"
+  type: "ReLU"
+  bottom: "dense1b4_bn"
+  top: "dense1b4_bn"
+}
+layer {
+  name: "dense1b4_conv"
+  type: "Convolution"
+  bottom: "dense1b4_bn"
+  top: "dense1b4_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b4_dropout"
+  type: "Dropout"
+  bottom: "dense1b4_conv"
+  top: "dense1b4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b4_concat"
+  type: "Concat"
+  bottom: "dense1b3_concat"
+  bottom: "dense1b4_dropout"
+  top: "dense1b4_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1a5_bn"
+  type: "BatchNorm"
+  bottom: "dense1b4_concat"
+  top: "dense1a5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a5_scale"
+  type: "Scale"
+  bottom: "dense1a5_bn"
+  top: "dense1a5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a5_relu"
+  type: "ReLU"
+  bottom: "dense1a5_bn"
+  top: "dense1a5_bn"
+}
+layer {
+  name: "dense1a5_conv"
+  type: "Convolution"
+  bottom: "dense1a5_bn"
+  top: "dense1a5_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a5_dropout"
+  type: "Dropout"
+  bottom: "dense1a5_conv"
+  top: "dense1a5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b5_bn"
+  type: "BatchNorm"
+  bottom: "dense1a5_dropout"
+  top: "dense1b5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b5_scale"
+  type: "Scale"
+  bottom: "dense1b5_bn"
+  top: "dense1b5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b5_relu"
+  type: "ReLU"
+  bottom: "dense1b5_bn"
+  top: "dense1b5_bn"
+}
+layer {
+  name: "dense1b5_conv"
+  type: "Convolution"
+  bottom: "dense1b5_bn"
+  top: "dense1b5_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b5_dropout"
+  type: "Dropout"
+  bottom: "dense1b5_conv"
+  top: "dense1b5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b5_concat"
+  type: "Concat"
+  bottom: "dense1b4_concat"
+  bottom: "dense1b5_dropout"
+  top: "dense1b5_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1a6_bn"
+  type: "BatchNorm"
+  bottom: "dense1b5_concat"
+  top: "dense1a6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1a6_scale"
+  type: "Scale"
+  bottom: "dense1a6_bn"
+  top: "dense1a6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1a6_relu"
+  type: "ReLU"
+  bottom: "dense1a6_bn"
+  top: "dense1a6_bn"
+}
+layer {
+  name: "dense1a6_conv"
+  type: "Convolution"
+  bottom: "dense1a6_bn"
+  top: "dense1a6_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1a6_dropout"
+  type: "Dropout"
+  bottom: "dense1a6_conv"
+  top: "dense1a6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b6_bn"
+  type: "BatchNorm"
+  bottom: "dense1a6_dropout"
+  top: "dense1b6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b6_scale"
+  type: "Scale"
+  bottom: "dense1b6_bn"
+  top: "dense1b6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b6_relu"
+  type: "ReLU"
+  bottom: "dense1b6_bn"
+  top: "dense1b6_bn"
+}
+layer {
+  name: "dense1b6_conv"
+  type: "Convolution"
+  bottom: "dense1b6_bn"
+  top: "dense1b6_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b6_dropout"
+  type: "Dropout"
+  bottom: "dense1b6_conv"
+  top: "dense1b6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1b6_concat"
+  type: "Concat"
+  bottom: "dense1b5_concat"
+  bottom: "dense1b6_dropout"
+  top: "dense1b6_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense1b7_bn"
+  type: "BatchNorm"
+  bottom: "dense1b6_concat"
+  top: "dense1b7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense1b7_scale"
+  type: "Scale"
+  bottom: "dense1b7_bn"
+  top: "dense1b7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense1b7_relu"
+  type: "ReLU"
+  bottom: "dense1b7_bn"
+  top: "dense1b7_bn"
+}
+layer {
+  name: "dense1b7_conv"
+  type: "Convolution"
+  bottom: "dense1b7_bn"
+  top: "dense1b7_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense1b7_dropout"
+  type: "Dropout"
+  bottom: "dense1b7_conv"
+  top: "dense1b7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense1_pool"
+  type: "Pooling"
+  bottom: "dense1b7_dropout"
+  top: "dense1_pool"
+  pooling_param {
+    pool: AVE
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dense2a1_bn"
+  type: "BatchNorm"
+  bottom: "dense1_pool"
+  top: "dense2a1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a1_scale"
+  type: "Scale"
+  bottom: "dense2a1_bn"
+  top: "dense2a1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a1_relu"
+  type: "ReLU"
+  bottom: "dense2a1_bn"
+  top: "dense2a1_bn"
+}
+layer {
+  name: "dense2a1_conv"
+  type: "Convolution"
+  bottom: "dense2a1_bn"
+  top: "dense2a1_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a1_dropout"
+  type: "Dropout"
+  bottom: "dense2a1_conv"
+  top: "dense2a1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b1_bn"
+  type: "BatchNorm"
+  bottom: "dense2a1_dropout"
+  top: "dense2b1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b1_scale"
+  type: "Scale"
+  bottom: "dense2b1_bn"
+  top: "dense2b1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b1_relu"
+  type: "ReLU"
+  bottom: "dense2b1_bn"
+  top: "dense2b1_bn"
+}
+layer {
+  name: "dense2b1_conv"
+  type: "Convolution"
+  bottom: "dense2b1_bn"
+  top: "dense2b1_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b1_dropout"
+  type: "Dropout"
+  bottom: "dense2b1_conv"
+  top: "dense2b1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b1_concat"
+  type: "Concat"
+  bottom: "dense1_pool"
+  bottom: "dense2b1_dropout"
+  top: "dense2b1_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a2_bn"
+  type: "BatchNorm"
+  bottom: "dense2b1_concat"
+  top: "dense2a2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a2_scale"
+  type: "Scale"
+  bottom: "dense2a2_bn"
+  top: "dense2a2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a2_relu"
+  type: "ReLU"
+  bottom: "dense2a2_bn"
+  top: "dense2a2_bn"
+}
+layer {
+  name: "dense2a2_conv"
+  type: "Convolution"
+  bottom: "dense2a2_bn"
+  top: "dense2a2_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a2_dropout"
+  type: "Dropout"
+  bottom: "dense2a2_conv"
+  top: "dense2a2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b2_bn"
+  type: "BatchNorm"
+  bottom: "dense2a2_dropout"
+  top: "dense2b2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b2_scale"
+  type: "Scale"
+  bottom: "dense2b2_bn"
+  top: "dense2b2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b2_relu"
+  type: "ReLU"
+  bottom: "dense2b2_bn"
+  top: "dense2b2_bn"
+}
+layer {
+  name: "dense2b2_conv"
+  type: "Convolution"
+  bottom: "dense2b2_bn"
+  top: "dense2b2_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b2_dropout"
+  type: "Dropout"
+  bottom: "dense2b2_conv"
+  top: "dense2b2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b2_concat"
+  type: "Concat"
+  bottom: "dense2b1_concat"
+  bottom: "dense2b2_dropout"
+  top: "dense2b2_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a3_bn"
+  type: "BatchNorm"
+  bottom: "dense2b2_concat"
+  top: "dense2a3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a3_scale"
+  type: "Scale"
+  bottom: "dense2a3_bn"
+  top: "dense2a3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a3_relu"
+  type: "ReLU"
+  bottom: "dense2a3_bn"
+  top: "dense2a3_bn"
+}
+layer {
+  name: "dense2a3_conv"
+  type: "Convolution"
+  bottom: "dense2a3_bn"
+  top: "dense2a3_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a3_dropout"
+  type: "Dropout"
+  bottom: "dense2a3_conv"
+  top: "dense2a3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b3_bn"
+  type: "BatchNorm"
+  bottom: "dense2a3_dropout"
+  top: "dense2b3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b3_scale"
+  type: "Scale"
+  bottom: "dense2b3_bn"
+  top: "dense2b3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b3_relu"
+  type: "ReLU"
+  bottom: "dense2b3_bn"
+  top: "dense2b3_bn"
+}
+layer {
+  name: "dense2b3_conv"
+  type: "Convolution"
+  bottom: "dense2b3_bn"
+  top: "dense2b3_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b3_dropout"
+  type: "Dropout"
+  bottom: "dense2b3_conv"
+  top: "dense2b3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b3_concat"
+  type: "Concat"
+  bottom: "dense2b2_concat"
+  bottom: "dense2b3_dropout"
+  top: "dense2b3_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a4_bn"
+  type: "BatchNorm"
+  bottom: "dense2b3_concat"
+  top: "dense2a4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a4_scale"
+  type: "Scale"
+  bottom: "dense2a4_bn"
+  top: "dense2a4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a4_relu"
+  type: "ReLU"
+  bottom: "dense2a4_bn"
+  top: "dense2a4_bn"
+}
+layer {
+  name: "dense2a4_conv"
+  type: "Convolution"
+  bottom: "dense2a4_bn"
+  top: "dense2a4_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a4_dropout"
+  type: "Dropout"
+  bottom: "dense2a4_conv"
+  top: "dense2a4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b4_bn"
+  type: "BatchNorm"
+  bottom: "dense2a4_dropout"
+  top: "dense2b4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b4_scale"
+  type: "Scale"
+  bottom: "dense2b4_bn"
+  top: "dense2b4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b4_relu"
+  type: "ReLU"
+  bottom: "dense2b4_bn"
+  top: "dense2b4_bn"
+}
+layer {
+  name: "dense2b4_conv"
+  type: "Convolution"
+  bottom: "dense2b4_bn"
+  top: "dense2b4_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b4_dropout"
+  type: "Dropout"
+  bottom: "dense2b4_conv"
+  top: "dense2b4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b4_concat"
+  type: "Concat"
+  bottom: "dense2b3_concat"
+  bottom: "dense2b4_dropout"
+  top: "dense2b4_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a5_bn"
+  type: "BatchNorm"
+  bottom: "dense2b4_concat"
+  top: "dense2a5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a5_scale"
+  type: "Scale"
+  bottom: "dense2a5_bn"
+  top: "dense2a5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a5_relu"
+  type: "ReLU"
+  bottom: "dense2a5_bn"
+  top: "dense2a5_bn"
+}
+layer {
+  name: "dense2a5_conv"
+  type: "Convolution"
+  bottom: "dense2a5_bn"
+  top: "dense2a5_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a5_dropout"
+  type: "Dropout"
+  bottom: "dense2a5_conv"
+  top: "dense2a5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b5_bn"
+  type: "BatchNorm"
+  bottom: "dense2a5_dropout"
+  top: "dense2b5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b5_scale"
+  type: "Scale"
+  bottom: "dense2b5_bn"
+  top: "dense2b5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b5_relu"
+  type: "ReLU"
+  bottom: "dense2b5_bn"
+  top: "dense2b5_bn"
+}
+layer {
+  name: "dense2b5_conv"
+  type: "Convolution"
+  bottom: "dense2b5_bn"
+  top: "dense2b5_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b5_dropout"
+  type: "Dropout"
+  bottom: "dense2b5_conv"
+  top: "dense2b5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b5_concat"
+  type: "Concat"
+  bottom: "dense2b4_concat"
+  bottom: "dense2b5_dropout"
+  top: "dense2b5_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a6_bn"
+  type: "BatchNorm"
+  bottom: "dense2b5_concat"
+  top: "dense2a6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a6_scale"
+  type: "Scale"
+  bottom: "dense2a6_bn"
+  top: "dense2a6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a6_relu"
+  type: "ReLU"
+  bottom: "dense2a6_bn"
+  top: "dense2a6_bn"
+}
+layer {
+  name: "dense2a6_conv"
+  type: "Convolution"
+  bottom: "dense2a6_bn"
+  top: "dense2a6_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a6_dropout"
+  type: "Dropout"
+  bottom: "dense2a6_conv"
+  top: "dense2a6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b6_bn"
+  type: "BatchNorm"
+  bottom: "dense2a6_dropout"
+  top: "dense2b6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b6_scale"
+  type: "Scale"
+  bottom: "dense2b6_bn"
+  top: "dense2b6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b6_relu"
+  type: "ReLU"
+  bottom: "dense2b6_bn"
+  top: "dense2b6_bn"
+}
+layer {
+  name: "dense2b6_conv"
+  type: "Convolution"
+  bottom: "dense2b6_bn"
+  top: "dense2b6_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b6_dropout"
+  type: "Dropout"
+  bottom: "dense2b6_conv"
+  top: "dense2b6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b6_concat"
+  type: "Concat"
+  bottom: "dense2b5_concat"
+  bottom: "dense2b6_dropout"
+  top: "dense2b6_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a7_bn"
+  type: "BatchNorm"
+  bottom: "dense2b6_concat"
+  top: "dense2a7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a7_scale"
+  type: "Scale"
+  bottom: "dense2a7_bn"
+  top: "dense2a7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a7_relu"
+  type: "ReLU"
+  bottom: "dense2a7_bn"
+  top: "dense2a7_bn"
+}
+layer {
+  name: "dense2a7_conv"
+  type: "Convolution"
+  bottom: "dense2a7_bn"
+  top: "dense2a7_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a7_dropout"
+  type: "Dropout"
+  bottom: "dense2a7_conv"
+  top: "dense2a7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b7_bn"
+  type: "BatchNorm"
+  bottom: "dense2a7_dropout"
+  top: "dense2b7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b7_scale"
+  type: "Scale"
+  bottom: "dense2b7_bn"
+  top: "dense2b7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b7_relu"
+  type: "ReLU"
+  bottom: "dense2b7_bn"
+  top: "dense2b7_bn"
+}
+layer {
+  name: "dense2b7_conv"
+  type: "Convolution"
+  bottom: "dense2b7_bn"
+  top: "dense2b7_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b7_dropout"
+  type: "Dropout"
+  bottom: "dense2b7_conv"
+  top: "dense2b7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b7_concat"
+  type: "Concat"
+  bottom: "dense2b6_concat"
+  bottom: "dense2b7_dropout"
+  top: "dense2b7_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a8_bn"
+  type: "BatchNorm"
+  bottom: "dense2b7_concat"
+  top: "dense2a8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a8_scale"
+  type: "Scale"
+  bottom: "dense2a8_bn"
+  top: "dense2a8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a8_relu"
+  type: "ReLU"
+  bottom: "dense2a8_bn"
+  top: "dense2a8_bn"
+}
+layer {
+  name: "dense2a8_conv"
+  type: "Convolution"
+  bottom: "dense2a8_bn"
+  top: "dense2a8_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a8_dropout"
+  type: "Dropout"
+  bottom: "dense2a8_conv"
+  top: "dense2a8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b8_bn"
+  type: "BatchNorm"
+  bottom: "dense2a8_dropout"
+  top: "dense2b8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b8_scale"
+  type: "Scale"
+  bottom: "dense2b8_bn"
+  top: "dense2b8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b8_relu"
+  type: "ReLU"
+  bottom: "dense2b8_bn"
+  top: "dense2b8_bn"
+}
+layer {
+  name: "dense2b8_conv"
+  type: "Convolution"
+  bottom: "dense2b8_bn"
+  top: "dense2b8_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b8_dropout"
+  type: "Dropout"
+  bottom: "dense2b8_conv"
+  top: "dense2b8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b8_concat"
+  type: "Concat"
+  bottom: "dense2b7_concat"
+  bottom: "dense2b8_dropout"
+  top: "dense2b8_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a9_bn"
+  type: "BatchNorm"
+  bottom: "dense2b8_concat"
+  top: "dense2a9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a9_scale"
+  type: "Scale"
+  bottom: "dense2a9_bn"
+  top: "dense2a9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a9_relu"
+  type: "ReLU"
+  bottom: "dense2a9_bn"
+  top: "dense2a9_bn"
+}
+layer {
+  name: "dense2a9_conv"
+  type: "Convolution"
+  bottom: "dense2a9_bn"
+  top: "dense2a9_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a9_dropout"
+  type: "Dropout"
+  bottom: "dense2a9_conv"
+  top: "dense2a9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b9_bn"
+  type: "BatchNorm"
+  bottom: "dense2a9_dropout"
+  top: "dense2b9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b9_scale"
+  type: "Scale"
+  bottom: "dense2b9_bn"
+  top: "dense2b9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b9_relu"
+  type: "ReLU"
+  bottom: "dense2b9_bn"
+  top: "dense2b9_bn"
+}
+layer {
+  name: "dense2b9_conv"
+  type: "Convolution"
+  bottom: "dense2b9_bn"
+  top: "dense2b9_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b9_dropout"
+  type: "Dropout"
+  bottom: "dense2b9_conv"
+  top: "dense2b9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b9_concat"
+  type: "Concat"
+  bottom: "dense2b8_concat"
+  bottom: "dense2b9_dropout"
+  top: "dense2b9_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a10_bn"
+  type: "BatchNorm"
+  bottom: "dense2b9_concat"
+  top: "dense2a10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a10_scale"
+  type: "Scale"
+  bottom: "dense2a10_bn"
+  top: "dense2a10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a10_relu"
+  type: "ReLU"
+  bottom: "dense2a10_bn"
+  top: "dense2a10_bn"
+}
+layer {
+  name: "dense2a10_conv"
+  type: "Convolution"
+  bottom: "dense2a10_bn"
+  top: "dense2a10_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a10_dropout"
+  type: "Dropout"
+  bottom: "dense2a10_conv"
+  top: "dense2a10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b10_bn"
+  type: "BatchNorm"
+  bottom: "dense2a10_dropout"
+  top: "dense2b10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b10_scale"
+  type: "Scale"
+  bottom: "dense2b10_bn"
+  top: "dense2b10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b10_relu"
+  type: "ReLU"
+  bottom: "dense2b10_bn"
+  top: "dense2b10_bn"
+}
+layer {
+  name: "dense2b10_conv"
+  type: "Convolution"
+  bottom: "dense2b10_bn"
+  top: "dense2b10_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b10_dropout"
+  type: "Dropout"
+  bottom: "dense2b10_conv"
+  top: "dense2b10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b10_concat"
+  type: "Concat"
+  bottom: "dense2b9_concat"
+  bottom: "dense2b10_dropout"
+  top: "dense2b10_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a11_bn"
+  type: "BatchNorm"
+  bottom: "dense2b10_concat"
+  top: "dense2a11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a11_scale"
+  type: "Scale"
+  bottom: "dense2a11_bn"
+  top: "dense2a11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a11_relu"
+  type: "ReLU"
+  bottom: "dense2a11_bn"
+  top: "dense2a11_bn"
+}
+layer {
+  name: "dense2a11_conv"
+  type: "Convolution"
+  bottom: "dense2a11_bn"
+  top: "dense2a11_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a11_dropout"
+  type: "Dropout"
+  bottom: "dense2a11_conv"
+  top: "dense2a11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b11_bn"
+  type: "BatchNorm"
+  bottom: "dense2a11_dropout"
+  top: "dense2b11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b11_scale"
+  type: "Scale"
+  bottom: "dense2b11_bn"
+  top: "dense2b11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b11_relu"
+  type: "ReLU"
+  bottom: "dense2b11_bn"
+  top: "dense2b11_bn"
+}
+layer {
+  name: "dense2b11_conv"
+  type: "Convolution"
+  bottom: "dense2b11_bn"
+  top: "dense2b11_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b11_dropout"
+  type: "Dropout"
+  bottom: "dense2b11_conv"
+  top: "dense2b11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b11_concat"
+  type: "Concat"
+  bottom: "dense2b10_concat"
+  bottom: "dense2b11_dropout"
+  top: "dense2b11_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2a12_bn"
+  type: "BatchNorm"
+  bottom: "dense2b11_concat"
+  top: "dense2a12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2a12_scale"
+  type: "Scale"
+  bottom: "dense2a12_bn"
+  top: "dense2a12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2a12_relu"
+  type: "ReLU"
+  bottom: "dense2a12_bn"
+  top: "dense2a12_bn"
+}
+layer {
+  name: "dense2a12_conv"
+  type: "Convolution"
+  bottom: "dense2a12_bn"
+  top: "dense2a12_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2a12_dropout"
+  type: "Dropout"
+  bottom: "dense2a12_conv"
+  top: "dense2a12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b12_bn"
+  type: "BatchNorm"
+  bottom: "dense2a12_dropout"
+  top: "dense2b12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b12_scale"
+  type: "Scale"
+  bottom: "dense2b12_bn"
+  top: "dense2b12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b12_relu"
+  type: "ReLU"
+  bottom: "dense2b12_bn"
+  top: "dense2b12_bn"
+}
+layer {
+  name: "dense2b12_conv"
+  type: "Convolution"
+  bottom: "dense2b12_bn"
+  top: "dense2b12_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b12_dropout"
+  type: "Dropout"
+  bottom: "dense2b12_conv"
+  top: "dense2b12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2b12_concat"
+  type: "Concat"
+  bottom: "dense2b11_concat"
+  bottom: "dense2b12_dropout"
+  top: "dense2b12_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense2b13_bn"
+  type: "BatchNorm"
+  bottom: "dense2b12_concat"
+  top: "dense2b13_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense2b13_scale"
+  type: "Scale"
+  bottom: "dense2b13_bn"
+  top: "dense2b13_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense2b13_relu"
+  type: "ReLU"
+  bottom: "dense2b13_bn"
+  top: "dense2b13_bn"
+}
+layer {
+  name: "dense2b13_conv"
+  type: "Convolution"
+  bottom: "dense2b13_bn"
+  top: "dense2b13_conv"
+  convolution_param {
+    num_output: 256
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense2b13_dropout"
+  type: "Dropout"
+  bottom: "dense2b13_conv"
+  top: "dense2b13_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense2_pool"
+  type: "Pooling"
+  bottom: "dense2b13_dropout"
+  top: "dense2_pool"
+  pooling_param {
+    pool: AVE
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dense3a1_bn"
+  type: "BatchNorm"
+  bottom: "dense2_pool"
+  top: "dense3a1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a1_scale"
+  type: "Scale"
+  bottom: "dense3a1_bn"
+  top: "dense3a1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a1_relu"
+  type: "ReLU"
+  bottom: "dense3a1_bn"
+  top: "dense3a1_bn"
+}
+layer {
+  name: "dense3a1_conv"
+  type: "Convolution"
+  bottom: "dense3a1_bn"
+  top: "dense3a1_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a1_dropout"
+  type: "Dropout"
+  bottom: "dense3a1_conv"
+  top: "dense3a1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b1_bn"
+  type: "BatchNorm"
+  bottom: "dense3a1_dropout"
+  top: "dense3b1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b1_scale"
+  type: "Scale"
+  bottom: "dense3b1_bn"
+  top: "dense3b1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b1_relu"
+  type: "ReLU"
+  bottom: "dense3b1_bn"
+  top: "dense3b1_bn"
+}
+layer {
+  name: "dense3b1_conv"
+  type: "Convolution"
+  bottom: "dense3b1_bn"
+  top: "dense3b1_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b1_dropout"
+  type: "Dropout"
+  bottom: "dense3b1_conv"
+  top: "dense3b1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b1_concat"
+  type: "Concat"
+  bottom: "dense2_pool"
+  bottom: "dense3b1_dropout"
+  top: "dense3b1_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a2_bn"
+  type: "BatchNorm"
+  bottom: "dense3b1_concat"
+  top: "dense3a2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a2_scale"
+  type: "Scale"
+  bottom: "dense3a2_bn"
+  top: "dense3a2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a2_relu"
+  type: "ReLU"
+  bottom: "dense3a2_bn"
+  top: "dense3a2_bn"
+}
+layer {
+  name: "dense3a2_conv"
+  type: "Convolution"
+  bottom: "dense3a2_bn"
+  top: "dense3a2_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a2_dropout"
+  type: "Dropout"
+  bottom: "dense3a2_conv"
+  top: "dense3a2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b2_bn"
+  type: "BatchNorm"
+  bottom: "dense3a2_dropout"
+  top: "dense3b2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b2_scale"
+  type: "Scale"
+  bottom: "dense3b2_bn"
+  top: "dense3b2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b2_relu"
+  type: "ReLU"
+  bottom: "dense3b2_bn"
+  top: "dense3b2_bn"
+}
+layer {
+  name: "dense3b2_conv"
+  type: "Convolution"
+  bottom: "dense3b2_bn"
+  top: "dense3b2_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b2_dropout"
+  type: "Dropout"
+  bottom: "dense3b2_conv"
+  top: "dense3b2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b2_concat"
+  type: "Concat"
+  bottom: "dense3b1_concat"
+  bottom: "dense3b2_dropout"
+  top: "dense3b2_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a3_bn"
+  type: "BatchNorm"
+  bottom: "dense3b2_concat"
+  top: "dense3a3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a3_scale"
+  type: "Scale"
+  bottom: "dense3a3_bn"
+  top: "dense3a3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a3_relu"
+  type: "ReLU"
+  bottom: "dense3a3_bn"
+  top: "dense3a3_bn"
+}
+layer {
+  name: "dense3a3_conv"
+  type: "Convolution"
+  bottom: "dense3a3_bn"
+  top: "dense3a3_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a3_dropout"
+  type: "Dropout"
+  bottom: "dense3a3_conv"
+  top: "dense3a3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b3_bn"
+  type: "BatchNorm"
+  bottom: "dense3a3_dropout"
+  top: "dense3b3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b3_scale"
+  type: "Scale"
+  bottom: "dense3b3_bn"
+  top: "dense3b3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b3_relu"
+  type: "ReLU"
+  bottom: "dense3b3_bn"
+  top: "dense3b3_bn"
+}
+layer {
+  name: "dense3b3_conv"
+  type: "Convolution"
+  bottom: "dense3b3_bn"
+  top: "dense3b3_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b3_dropout"
+  type: "Dropout"
+  bottom: "dense3b3_conv"
+  top: "dense3b3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b3_concat"
+  type: "Concat"
+  bottom: "dense3b2_concat"
+  bottom: "dense3b3_dropout"
+  top: "dense3b3_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a4_bn"
+  type: "BatchNorm"
+  bottom: "dense3b3_concat"
+  top: "dense3a4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a4_scale"
+  type: "Scale"
+  bottom: "dense3a4_bn"
+  top: "dense3a4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a4_relu"
+  type: "ReLU"
+  bottom: "dense3a4_bn"
+  top: "dense3a4_bn"
+}
+layer {
+  name: "dense3a4_conv"
+  type: "Convolution"
+  bottom: "dense3a4_bn"
+  top: "dense3a4_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a4_dropout"
+  type: "Dropout"
+  bottom: "dense3a4_conv"
+  top: "dense3a4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b4_bn"
+  type: "BatchNorm"
+  bottom: "dense3a4_dropout"
+  top: "dense3b4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b4_scale"
+  type: "Scale"
+  bottom: "dense3b4_bn"
+  top: "dense3b4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b4_relu"
+  type: "ReLU"
+  bottom: "dense3b4_bn"
+  top: "dense3b4_bn"
+}
+layer {
+  name: "dense3b4_conv"
+  type: "Convolution"
+  bottom: "dense3b4_bn"
+  top: "dense3b4_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b4_dropout"
+  type: "Dropout"
+  bottom: "dense3b4_conv"
+  top: "dense3b4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b4_concat"
+  type: "Concat"
+  bottom: "dense3b3_concat"
+  bottom: "dense3b4_dropout"
+  top: "dense3b4_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a5_bn"
+  type: "BatchNorm"
+  bottom: "dense3b4_concat"
+  top: "dense3a5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a5_scale"
+  type: "Scale"
+  bottom: "dense3a5_bn"
+  top: "dense3a5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a5_relu"
+  type: "ReLU"
+  bottom: "dense3a5_bn"
+  top: "dense3a5_bn"
+}
+layer {
+  name: "dense3a5_conv"
+  type: "Convolution"
+  bottom: "dense3a5_bn"
+  top: "dense3a5_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a5_dropout"
+  type: "Dropout"
+  bottom: "dense3a5_conv"
+  top: "dense3a5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b5_bn"
+  type: "BatchNorm"
+  bottom: "dense3a5_dropout"
+  top: "dense3b5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b5_scale"
+  type: "Scale"
+  bottom: "dense3b5_bn"
+  top: "dense3b5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b5_relu"
+  type: "ReLU"
+  bottom: "dense3b5_bn"
+  top: "dense3b5_bn"
+}
+layer {
+  name: "dense3b5_conv"
+  type: "Convolution"
+  bottom: "dense3b5_bn"
+  top: "dense3b5_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b5_dropout"
+  type: "Dropout"
+  bottom: "dense3b5_conv"
+  top: "dense3b5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b5_concat"
+  type: "Concat"
+  bottom: "dense3b4_concat"
+  bottom: "dense3b5_dropout"
+  top: "dense3b5_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a6_bn"
+  type: "BatchNorm"
+  bottom: "dense3b5_concat"
+  top: "dense3a6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a6_scale"
+  type: "Scale"
+  bottom: "dense3a6_bn"
+  top: "dense3a6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a6_relu"
+  type: "ReLU"
+  bottom: "dense3a6_bn"
+  top: "dense3a6_bn"
+}
+layer {
+  name: "dense3a6_conv"
+  type: "Convolution"
+  bottom: "dense3a6_bn"
+  top: "dense3a6_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a6_dropout"
+  type: "Dropout"
+  bottom: "dense3a6_conv"
+  top: "dense3a6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b6_bn"
+  type: "BatchNorm"
+  bottom: "dense3a6_dropout"
+  top: "dense3b6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b6_scale"
+  type: "Scale"
+  bottom: "dense3b6_bn"
+  top: "dense3b6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b6_relu"
+  type: "ReLU"
+  bottom: "dense3b6_bn"
+  top: "dense3b6_bn"
+}
+layer {
+  name: "dense3b6_conv"
+  type: "Convolution"
+  bottom: "dense3b6_bn"
+  top: "dense3b6_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b6_dropout"
+  type: "Dropout"
+  bottom: "dense3b6_conv"
+  top: "dense3b6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b6_concat"
+  type: "Concat"
+  bottom: "dense3b5_concat"
+  bottom: "dense3b6_dropout"
+  top: "dense3b6_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a7_bn"
+  type: "BatchNorm"
+  bottom: "dense3b6_concat"
+  top: "dense3a7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a7_scale"
+  type: "Scale"
+  bottom: "dense3a7_bn"
+  top: "dense3a7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a7_relu"
+  type: "ReLU"
+  bottom: "dense3a7_bn"
+  top: "dense3a7_bn"
+}
+layer {
+  name: "dense3a7_conv"
+  type: "Convolution"
+  bottom: "dense3a7_bn"
+  top: "dense3a7_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a7_dropout"
+  type: "Dropout"
+  bottom: "dense3a7_conv"
+  top: "dense3a7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b7_bn"
+  type: "BatchNorm"
+  bottom: "dense3a7_dropout"
+  top: "dense3b7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b7_scale"
+  type: "Scale"
+  bottom: "dense3b7_bn"
+  top: "dense3b7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b7_relu"
+  type: "ReLU"
+  bottom: "dense3b7_bn"
+  top: "dense3b7_bn"
+}
+layer {
+  name: "dense3b7_conv"
+  type: "Convolution"
+  bottom: "dense3b7_bn"
+  top: "dense3b7_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b7_dropout"
+  type: "Dropout"
+  bottom: "dense3b7_conv"
+  top: "dense3b7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b7_concat"
+  type: "Concat"
+  bottom: "dense3b6_concat"
+  bottom: "dense3b7_dropout"
+  top: "dense3b7_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a8_bn"
+  type: "BatchNorm"
+  bottom: "dense3b7_concat"
+  top: "dense3a8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a8_scale"
+  type: "Scale"
+  bottom: "dense3a8_bn"
+  top: "dense3a8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a8_relu"
+  type: "ReLU"
+  bottom: "dense3a8_bn"
+  top: "dense3a8_bn"
+}
+layer {
+  name: "dense3a8_conv"
+  type: "Convolution"
+  bottom: "dense3a8_bn"
+  top: "dense3a8_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a8_dropout"
+  type: "Dropout"
+  bottom: "dense3a8_conv"
+  top: "dense3a8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b8_bn"
+  type: "BatchNorm"
+  bottom: "dense3a8_dropout"
+  top: "dense3b8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b8_scale"
+  type: "Scale"
+  bottom: "dense3b8_bn"
+  top: "dense3b8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b8_relu"
+  type: "ReLU"
+  bottom: "dense3b8_bn"
+  top: "dense3b8_bn"
+}
+layer {
+  name: "dense3b8_conv"
+  type: "Convolution"
+  bottom: "dense3b8_bn"
+  top: "dense3b8_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b8_dropout"
+  type: "Dropout"
+  bottom: "dense3b8_conv"
+  top: "dense3b8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b8_concat"
+  type: "Concat"
+  bottom: "dense3b7_concat"
+  bottom: "dense3b8_dropout"
+  top: "dense3b8_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a9_bn"
+  type: "BatchNorm"
+  bottom: "dense3b8_concat"
+  top: "dense3a9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a9_scale"
+  type: "Scale"
+  bottom: "dense3a9_bn"
+  top: "dense3a9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a9_relu"
+  type: "ReLU"
+  bottom: "dense3a9_bn"
+  top: "dense3a9_bn"
+}
+layer {
+  name: "dense3a9_conv"
+  type: "Convolution"
+  bottom: "dense3a9_bn"
+  top: "dense3a9_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a9_dropout"
+  type: "Dropout"
+  bottom: "dense3a9_conv"
+  top: "dense3a9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b9_bn"
+  type: "BatchNorm"
+  bottom: "dense3a9_dropout"
+  top: "dense3b9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b9_scale"
+  type: "Scale"
+  bottom: "dense3b9_bn"
+  top: "dense3b9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b9_relu"
+  type: "ReLU"
+  bottom: "dense3b9_bn"
+  top: "dense3b9_bn"
+}
+layer {
+  name: "dense3b9_conv"
+  type: "Convolution"
+  bottom: "dense3b9_bn"
+  top: "dense3b9_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b9_dropout"
+  type: "Dropout"
+  bottom: "dense3b9_conv"
+  top: "dense3b9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b9_concat"
+  type: "Concat"
+  bottom: "dense3b8_concat"
+  bottom: "dense3b9_dropout"
+  top: "dense3b9_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a10_bn"
+  type: "BatchNorm"
+  bottom: "dense3b9_concat"
+  top: "dense3a10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a10_scale"
+  type: "Scale"
+  bottom: "dense3a10_bn"
+  top: "dense3a10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a10_relu"
+  type: "ReLU"
+  bottom: "dense3a10_bn"
+  top: "dense3a10_bn"
+}
+layer {
+  name: "dense3a10_conv"
+  type: "Convolution"
+  bottom: "dense3a10_bn"
+  top: "dense3a10_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a10_dropout"
+  type: "Dropout"
+  bottom: "dense3a10_conv"
+  top: "dense3a10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b10_bn"
+  type: "BatchNorm"
+  bottom: "dense3a10_dropout"
+  top: "dense3b10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b10_scale"
+  type: "Scale"
+  bottom: "dense3b10_bn"
+  top: "dense3b10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b10_relu"
+  type: "ReLU"
+  bottom: "dense3b10_bn"
+  top: "dense3b10_bn"
+}
+layer {
+  name: "dense3b10_conv"
+  type: "Convolution"
+  bottom: "dense3b10_bn"
+  top: "dense3b10_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b10_dropout"
+  type: "Dropout"
+  bottom: "dense3b10_conv"
+  top: "dense3b10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b10_concat"
+  type: "Concat"
+  bottom: "dense3b9_concat"
+  bottom: "dense3b10_dropout"
+  top: "dense3b10_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a11_bn"
+  type: "BatchNorm"
+  bottom: "dense3b10_concat"
+  top: "dense3a11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a11_scale"
+  type: "Scale"
+  bottom: "dense3a11_bn"
+  top: "dense3a11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a11_relu"
+  type: "ReLU"
+  bottom: "dense3a11_bn"
+  top: "dense3a11_bn"
+}
+layer {
+  name: "dense3a11_conv"
+  type: "Convolution"
+  bottom: "dense3a11_bn"
+  top: "dense3a11_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a11_dropout"
+  type: "Dropout"
+  bottom: "dense3a11_conv"
+  top: "dense3a11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b11_bn"
+  type: "BatchNorm"
+  bottom: "dense3a11_dropout"
+  top: "dense3b11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b11_scale"
+  type: "Scale"
+  bottom: "dense3b11_bn"
+  top: "dense3b11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b11_relu"
+  type: "ReLU"
+  bottom: "dense3b11_bn"
+  top: "dense3b11_bn"
+}
+layer {
+  name: "dense3b11_conv"
+  type: "Convolution"
+  bottom: "dense3b11_bn"
+  top: "dense3b11_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b11_dropout"
+  type: "Dropout"
+  bottom: "dense3b11_conv"
+  top: "dense3b11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b11_concat"
+  type: "Concat"
+  bottom: "dense3b10_concat"
+  bottom: "dense3b11_dropout"
+  top: "dense3b11_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a12_bn"
+  type: "BatchNorm"
+  bottom: "dense3b11_concat"
+  top: "dense3a12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a12_scale"
+  type: "Scale"
+  bottom: "dense3a12_bn"
+  top: "dense3a12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a12_relu"
+  type: "ReLU"
+  bottom: "dense3a12_bn"
+  top: "dense3a12_bn"
+}
+layer {
+  name: "dense3a12_conv"
+  type: "Convolution"
+  bottom: "dense3a12_bn"
+  top: "dense3a12_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a12_dropout"
+  type: "Dropout"
+  bottom: "dense3a12_conv"
+  top: "dense3a12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b12_bn"
+  type: "BatchNorm"
+  bottom: "dense3a12_dropout"
+  top: "dense3b12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b12_scale"
+  type: "Scale"
+  bottom: "dense3b12_bn"
+  top: "dense3b12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b12_relu"
+  type: "ReLU"
+  bottom: "dense3b12_bn"
+  top: "dense3b12_bn"
+}
+layer {
+  name: "dense3b12_conv"
+  type: "Convolution"
+  bottom: "dense3b12_bn"
+  top: "dense3b12_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b12_dropout"
+  type: "Dropout"
+  bottom: "dense3b12_conv"
+  top: "dense3b12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b12_concat"
+  type: "Concat"
+  bottom: "dense3b11_concat"
+  bottom: "dense3b12_dropout"
+  top: "dense3b12_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a13_bn"
+  type: "BatchNorm"
+  bottom: "dense3b12_concat"
+  top: "dense3a13_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a13_scale"
+  type: "Scale"
+  bottom: "dense3a13_bn"
+  top: "dense3a13_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a13_relu"
+  type: "ReLU"
+  bottom: "dense3a13_bn"
+  top: "dense3a13_bn"
+}
+layer {
+  name: "dense3a13_conv"
+  type: "Convolution"
+  bottom: "dense3a13_bn"
+  top: "dense3a13_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a13_dropout"
+  type: "Dropout"
+  bottom: "dense3a13_conv"
+  top: "dense3a13_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b13_bn"
+  type: "BatchNorm"
+  bottom: "dense3a13_dropout"
+  top: "dense3b13_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b13_scale"
+  type: "Scale"
+  bottom: "dense3b13_bn"
+  top: "dense3b13_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b13_relu"
+  type: "ReLU"
+  bottom: "dense3b13_bn"
+  top: "dense3b13_bn"
+}
+layer {
+  name: "dense3b13_conv"
+  type: "Convolution"
+  bottom: "dense3b13_bn"
+  top: "dense3b13_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b13_dropout"
+  type: "Dropout"
+  bottom: "dense3b13_conv"
+  top: "dense3b13_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b13_concat"
+  type: "Concat"
+  bottom: "dense3b12_concat"
+  bottom: "dense3b13_dropout"
+  top: "dense3b13_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a14_bn"
+  type: "BatchNorm"
+  bottom: "dense3b13_concat"
+  top: "dense3a14_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a14_scale"
+  type: "Scale"
+  bottom: "dense3a14_bn"
+  top: "dense3a14_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a14_relu"
+  type: "ReLU"
+  bottom: "dense3a14_bn"
+  top: "dense3a14_bn"
+}
+layer {
+  name: "dense3a14_conv"
+  type: "Convolution"
+  bottom: "dense3a14_bn"
+  top: "dense3a14_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a14_dropout"
+  type: "Dropout"
+  bottom: "dense3a14_conv"
+  top: "dense3a14_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b14_bn"
+  type: "BatchNorm"
+  bottom: "dense3a14_dropout"
+  top: "dense3b14_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b14_scale"
+  type: "Scale"
+  bottom: "dense3b14_bn"
+  top: "dense3b14_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b14_relu"
+  type: "ReLU"
+  bottom: "dense3b14_bn"
+  top: "dense3b14_bn"
+}
+layer {
+  name: "dense3b14_conv"
+  type: "Convolution"
+  bottom: "dense3b14_bn"
+  top: "dense3b14_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b14_dropout"
+  type: "Dropout"
+  bottom: "dense3b14_conv"
+  top: "dense3b14_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b14_concat"
+  type: "Concat"
+  bottom: "dense3b13_concat"
+  bottom: "dense3b14_dropout"
+  top: "dense3b14_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a15_bn"
+  type: "BatchNorm"
+  bottom: "dense3b14_concat"
+  top: "dense3a15_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a15_scale"
+  type: "Scale"
+  bottom: "dense3a15_bn"
+  top: "dense3a15_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a15_relu"
+  type: "ReLU"
+  bottom: "dense3a15_bn"
+  top: "dense3a15_bn"
+}
+layer {
+  name: "dense3a15_conv"
+  type: "Convolution"
+  bottom: "dense3a15_bn"
+  top: "dense3a15_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a15_dropout"
+  type: "Dropout"
+  bottom: "dense3a15_conv"
+  top: "dense3a15_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b15_bn"
+  type: "BatchNorm"
+  bottom: "dense3a15_dropout"
+  top: "dense3b15_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b15_scale"
+  type: "Scale"
+  bottom: "dense3b15_bn"
+  top: "dense3b15_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b15_relu"
+  type: "ReLU"
+  bottom: "dense3b15_bn"
+  top: "dense3b15_bn"
+}
+layer {
+  name: "dense3b15_conv"
+  type: "Convolution"
+  bottom: "dense3b15_bn"
+  top: "dense3b15_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b15_dropout"
+  type: "Dropout"
+  bottom: "dense3b15_conv"
+  top: "dense3b15_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b15_concat"
+  type: "Concat"
+  bottom: "dense3b14_concat"
+  bottom: "dense3b15_dropout"
+  top: "dense3b15_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a16_bn"
+  type: "BatchNorm"
+  bottom: "dense3b15_concat"
+  top: "dense3a16_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a16_scale"
+  type: "Scale"
+  bottom: "dense3a16_bn"
+  top: "dense3a16_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a16_relu"
+  type: "ReLU"
+  bottom: "dense3a16_bn"
+  top: "dense3a16_bn"
+}
+layer {
+  name: "dense3a16_conv"
+  type: "Convolution"
+  bottom: "dense3a16_bn"
+  top: "dense3a16_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a16_dropout"
+  type: "Dropout"
+  bottom: "dense3a16_conv"
+  top: "dense3a16_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b16_bn"
+  type: "BatchNorm"
+  bottom: "dense3a16_dropout"
+  top: "dense3b16_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b16_scale"
+  type: "Scale"
+  bottom: "dense3b16_bn"
+  top: "dense3b16_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b16_relu"
+  type: "ReLU"
+  bottom: "dense3b16_bn"
+  top: "dense3b16_bn"
+}
+layer {
+  name: "dense3b16_conv"
+  type: "Convolution"
+  bottom: "dense3b16_bn"
+  top: "dense3b16_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b16_dropout"
+  type: "Dropout"
+  bottom: "dense3b16_conv"
+  top: "dense3b16_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b16_concat"
+  type: "Concat"
+  bottom: "dense3b15_concat"
+  bottom: "dense3b16_dropout"
+  top: "dense3b16_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a17_bn"
+  type: "BatchNorm"
+  bottom: "dense3b16_concat"
+  top: "dense3a17_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a17_scale"
+  type: "Scale"
+  bottom: "dense3a17_bn"
+  top: "dense3a17_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a17_relu"
+  type: "ReLU"
+  bottom: "dense3a17_bn"
+  top: "dense3a17_bn"
+}
+layer {
+  name: "dense3a17_conv"
+  type: "Convolution"
+  bottom: "dense3a17_bn"
+  top: "dense3a17_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a17_dropout"
+  type: "Dropout"
+  bottom: "dense3a17_conv"
+  top: "dense3a17_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b17_bn"
+  type: "BatchNorm"
+  bottom: "dense3a17_dropout"
+  top: "dense3b17_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b17_scale"
+  type: "Scale"
+  bottom: "dense3b17_bn"
+  top: "dense3b17_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b17_relu"
+  type: "ReLU"
+  bottom: "dense3b17_bn"
+  top: "dense3b17_bn"
+}
+layer {
+  name: "dense3b17_conv"
+  type: "Convolution"
+  bottom: "dense3b17_bn"
+  top: "dense3b17_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b17_dropout"
+  type: "Dropout"
+  bottom: "dense3b17_conv"
+  top: "dense3b17_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b17_concat"
+  type: "Concat"
+  bottom: "dense3b16_concat"
+  bottom: "dense3b17_dropout"
+  top: "dense3b17_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a18_bn"
+  type: "BatchNorm"
+  bottom: "dense3b17_concat"
+  top: "dense3a18_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a18_scale"
+  type: "Scale"
+  bottom: "dense3a18_bn"
+  top: "dense3a18_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a18_relu"
+  type: "ReLU"
+  bottom: "dense3a18_bn"
+  top: "dense3a18_bn"
+}
+layer {
+  name: "dense3a18_conv"
+  type: "Convolution"
+  bottom: "dense3a18_bn"
+  top: "dense3a18_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a18_dropout"
+  type: "Dropout"
+  bottom: "dense3a18_conv"
+  top: "dense3a18_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b18_bn"
+  type: "BatchNorm"
+  bottom: "dense3a18_dropout"
+  top: "dense3b18_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b18_scale"
+  type: "Scale"
+  bottom: "dense3b18_bn"
+  top: "dense3b18_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b18_relu"
+  type: "ReLU"
+  bottom: "dense3b18_bn"
+  top: "dense3b18_bn"
+}
+layer {
+  name: "dense3b18_conv"
+  type: "Convolution"
+  bottom: "dense3b18_bn"
+  top: "dense3b18_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b18_dropout"
+  type: "Dropout"
+  bottom: "dense3b18_conv"
+  top: "dense3b18_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b18_concat"
+  type: "Concat"
+  bottom: "dense3b17_concat"
+  bottom: "dense3b18_dropout"
+  top: "dense3b18_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a19_bn"
+  type: "BatchNorm"
+  bottom: "dense3b18_concat"
+  top: "dense3a19_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a19_scale"
+  type: "Scale"
+  bottom: "dense3a19_bn"
+  top: "dense3a19_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a19_relu"
+  type: "ReLU"
+  bottom: "dense3a19_bn"
+  top: "dense3a19_bn"
+}
+layer {
+  name: "dense3a19_conv"
+  type: "Convolution"
+  bottom: "dense3a19_bn"
+  top: "dense3a19_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a19_dropout"
+  type: "Dropout"
+  bottom: "dense3a19_conv"
+  top: "dense3a19_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b19_bn"
+  type: "BatchNorm"
+  bottom: "dense3a19_dropout"
+  top: "dense3b19_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b19_scale"
+  type: "Scale"
+  bottom: "dense3b19_bn"
+  top: "dense3b19_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b19_relu"
+  type: "ReLU"
+  bottom: "dense3b19_bn"
+  top: "dense3b19_bn"
+}
+layer {
+  name: "dense3b19_conv"
+  type: "Convolution"
+  bottom: "dense3b19_bn"
+  top: "dense3b19_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b19_dropout"
+  type: "Dropout"
+  bottom: "dense3b19_conv"
+  top: "dense3b19_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b19_concat"
+  type: "Concat"
+  bottom: "dense3b18_concat"
+  bottom: "dense3b19_dropout"
+  top: "dense3b19_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a20_bn"
+  type: "BatchNorm"
+  bottom: "dense3b19_concat"
+  top: "dense3a20_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a20_scale"
+  type: "Scale"
+  bottom: "dense3a20_bn"
+  top: "dense3a20_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a20_relu"
+  type: "ReLU"
+  bottom: "dense3a20_bn"
+  top: "dense3a20_bn"
+}
+layer {
+  name: "dense3a20_conv"
+  type: "Convolution"
+  bottom: "dense3a20_bn"
+  top: "dense3a20_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a20_dropout"
+  type: "Dropout"
+  bottom: "dense3a20_conv"
+  top: "dense3a20_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b20_bn"
+  type: "BatchNorm"
+  bottom: "dense3a20_dropout"
+  top: "dense3b20_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b20_scale"
+  type: "Scale"
+  bottom: "dense3b20_bn"
+  top: "dense3b20_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b20_relu"
+  type: "ReLU"
+  bottom: "dense3b20_bn"
+  top: "dense3b20_bn"
+}
+layer {
+  name: "dense3b20_conv"
+  type: "Convolution"
+  bottom: "dense3b20_bn"
+  top: "dense3b20_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b20_dropout"
+  type: "Dropout"
+  bottom: "dense3b20_conv"
+  top: "dense3b20_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b20_concat"
+  type: "Concat"
+  bottom: "dense3b19_concat"
+  bottom: "dense3b20_dropout"
+  top: "dense3b20_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a21_bn"
+  type: "BatchNorm"
+  bottom: "dense3b20_concat"
+  top: "dense3a21_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a21_scale"
+  type: "Scale"
+  bottom: "dense3a21_bn"
+  top: "dense3a21_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a21_relu"
+  type: "ReLU"
+  bottom: "dense3a21_bn"
+  top: "dense3a21_bn"
+}
+layer {
+  name: "dense3a21_conv"
+  type: "Convolution"
+  bottom: "dense3a21_bn"
+  top: "dense3a21_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a21_dropout"
+  type: "Dropout"
+  bottom: "dense3a21_conv"
+  top: "dense3a21_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b21_bn"
+  type: "BatchNorm"
+  bottom: "dense3a21_dropout"
+  top: "dense3b21_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b21_scale"
+  type: "Scale"
+  bottom: "dense3b21_bn"
+  top: "dense3b21_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b21_relu"
+  type: "ReLU"
+  bottom: "dense3b21_bn"
+  top: "dense3b21_bn"
+}
+layer {
+  name: "dense3b21_conv"
+  type: "Convolution"
+  bottom: "dense3b21_bn"
+  top: "dense3b21_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b21_dropout"
+  type: "Dropout"
+  bottom: "dense3b21_conv"
+  top: "dense3b21_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b21_concat"
+  type: "Concat"
+  bottom: "dense3b20_concat"
+  bottom: "dense3b21_dropout"
+  top: "dense3b21_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a22_bn"
+  type: "BatchNorm"
+  bottom: "dense3b21_concat"
+  top: "dense3a22_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a22_scale"
+  type: "Scale"
+  bottom: "dense3a22_bn"
+  top: "dense3a22_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a22_relu"
+  type: "ReLU"
+  bottom: "dense3a22_bn"
+  top: "dense3a22_bn"
+}
+layer {
+  name: "dense3a22_conv"
+  type: "Convolution"
+  bottom: "dense3a22_bn"
+  top: "dense3a22_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a22_dropout"
+  type: "Dropout"
+  bottom: "dense3a22_conv"
+  top: "dense3a22_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b22_bn"
+  type: "BatchNorm"
+  bottom: "dense3a22_dropout"
+  top: "dense3b22_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b22_scale"
+  type: "Scale"
+  bottom: "dense3b22_bn"
+  top: "dense3b22_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b22_relu"
+  type: "ReLU"
+  bottom: "dense3b22_bn"
+  top: "dense3b22_bn"
+}
+layer {
+  name: "dense3b22_conv"
+  type: "Convolution"
+  bottom: "dense3b22_bn"
+  top: "dense3b22_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b22_dropout"
+  type: "Dropout"
+  bottom: "dense3b22_conv"
+  top: "dense3b22_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b22_concat"
+  type: "Concat"
+  bottom: "dense3b21_concat"
+  bottom: "dense3b22_dropout"
+  top: "dense3b22_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a23_bn"
+  type: "BatchNorm"
+  bottom: "dense3b22_concat"
+  top: "dense3a23_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a23_scale"
+  type: "Scale"
+  bottom: "dense3a23_bn"
+  top: "dense3a23_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a23_relu"
+  type: "ReLU"
+  bottom: "dense3a23_bn"
+  top: "dense3a23_bn"
+}
+layer {
+  name: "dense3a23_conv"
+  type: "Convolution"
+  bottom: "dense3a23_bn"
+  top: "dense3a23_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a23_dropout"
+  type: "Dropout"
+  bottom: "dense3a23_conv"
+  top: "dense3a23_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b23_bn"
+  type: "BatchNorm"
+  bottom: "dense3a23_dropout"
+  top: "dense3b23_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b23_scale"
+  type: "Scale"
+  bottom: "dense3b23_bn"
+  top: "dense3b23_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b23_relu"
+  type: "ReLU"
+  bottom: "dense3b23_bn"
+  top: "dense3b23_bn"
+}
+layer {
+  name: "dense3b23_conv"
+  type: "Convolution"
+  bottom: "dense3b23_bn"
+  top: "dense3b23_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b23_dropout"
+  type: "Dropout"
+  bottom: "dense3b23_conv"
+  top: "dense3b23_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b23_concat"
+  type: "Concat"
+  bottom: "dense3b22_concat"
+  bottom: "dense3b23_dropout"
+  top: "dense3b23_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a24_bn"
+  type: "BatchNorm"
+  bottom: "dense3b23_concat"
+  top: "dense3a24_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a24_scale"
+  type: "Scale"
+  bottom: "dense3a24_bn"
+  top: "dense3a24_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a24_relu"
+  type: "ReLU"
+  bottom: "dense3a24_bn"
+  top: "dense3a24_bn"
+}
+layer {
+  name: "dense3a24_conv"
+  type: "Convolution"
+  bottom: "dense3a24_bn"
+  top: "dense3a24_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a24_dropout"
+  type: "Dropout"
+  bottom: "dense3a24_conv"
+  top: "dense3a24_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b24_bn"
+  type: "BatchNorm"
+  bottom: "dense3a24_dropout"
+  top: "dense3b24_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b24_scale"
+  type: "Scale"
+  bottom: "dense3b24_bn"
+  top: "dense3b24_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b24_relu"
+  type: "ReLU"
+  bottom: "dense3b24_bn"
+  top: "dense3b24_bn"
+}
+layer {
+  name: "dense3b24_conv"
+  type: "Convolution"
+  bottom: "dense3b24_bn"
+  top: "dense3b24_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b24_dropout"
+  type: "Dropout"
+  bottom: "dense3b24_conv"
+  top: "dense3b24_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b24_concat"
+  type: "Concat"
+  bottom: "dense3b23_concat"
+  bottom: "dense3b24_dropout"
+  top: "dense3b24_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a25_bn"
+  type: "BatchNorm"
+  bottom: "dense3b24_concat"
+  top: "dense3a25_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a25_scale"
+  type: "Scale"
+  bottom: "dense3a25_bn"
+  top: "dense3a25_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a25_relu"
+  type: "ReLU"
+  bottom: "dense3a25_bn"
+  top: "dense3a25_bn"
+}
+layer {
+  name: "dense3a25_conv"
+  type: "Convolution"
+  bottom: "dense3a25_bn"
+  top: "dense3a25_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a25_dropout"
+  type: "Dropout"
+  bottom: "dense3a25_conv"
+  top: "dense3a25_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b25_bn"
+  type: "BatchNorm"
+  bottom: "dense3a25_dropout"
+  top: "dense3b25_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b25_scale"
+  type: "Scale"
+  bottom: "dense3b25_bn"
+  top: "dense3b25_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b25_relu"
+  type: "ReLU"
+  bottom: "dense3b25_bn"
+  top: "dense3b25_bn"
+}
+layer {
+  name: "dense3b25_conv"
+  type: "Convolution"
+  bottom: "dense3b25_bn"
+  top: "dense3b25_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b25_dropout"
+  type: "Dropout"
+  bottom: "dense3b25_conv"
+  top: "dense3b25_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b25_concat"
+  type: "Concat"
+  bottom: "dense3b24_concat"
+  bottom: "dense3b25_dropout"
+  top: "dense3b25_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a26_bn"
+  type: "BatchNorm"
+  bottom: "dense3b25_concat"
+  top: "dense3a26_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a26_scale"
+  type: "Scale"
+  bottom: "dense3a26_bn"
+  top: "dense3a26_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a26_relu"
+  type: "ReLU"
+  bottom: "dense3a26_bn"
+  top: "dense3a26_bn"
+}
+layer {
+  name: "dense3a26_conv"
+  type: "Convolution"
+  bottom: "dense3a26_bn"
+  top: "dense3a26_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a26_dropout"
+  type: "Dropout"
+  bottom: "dense3a26_conv"
+  top: "dense3a26_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b26_bn"
+  type: "BatchNorm"
+  bottom: "dense3a26_dropout"
+  top: "dense3b26_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b26_scale"
+  type: "Scale"
+  bottom: "dense3b26_bn"
+  top: "dense3b26_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b26_relu"
+  type: "ReLU"
+  bottom: "dense3b26_bn"
+  top: "dense3b26_bn"
+}
+layer {
+  name: "dense3b26_conv"
+  type: "Convolution"
+  bottom: "dense3b26_bn"
+  top: "dense3b26_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b26_dropout"
+  type: "Dropout"
+  bottom: "dense3b26_conv"
+  top: "dense3b26_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b26_concat"
+  type: "Concat"
+  bottom: "dense3b25_concat"
+  bottom: "dense3b26_dropout"
+  top: "dense3b26_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a27_bn"
+  type: "BatchNorm"
+  bottom: "dense3b26_concat"
+  top: "dense3a27_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a27_scale"
+  type: "Scale"
+  bottom: "dense3a27_bn"
+  top: "dense3a27_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a27_relu"
+  type: "ReLU"
+  bottom: "dense3a27_bn"
+  top: "dense3a27_bn"
+}
+layer {
+  name: "dense3a27_conv"
+  type: "Convolution"
+  bottom: "dense3a27_bn"
+  top: "dense3a27_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a27_dropout"
+  type: "Dropout"
+  bottom: "dense3a27_conv"
+  top: "dense3a27_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b27_bn"
+  type: "BatchNorm"
+  bottom: "dense3a27_dropout"
+  top: "dense3b27_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b27_scale"
+  type: "Scale"
+  bottom: "dense3b27_bn"
+  top: "dense3b27_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b27_relu"
+  type: "ReLU"
+  bottom: "dense3b27_bn"
+  top: "dense3b27_bn"
+}
+layer {
+  name: "dense3b27_conv"
+  type: "Convolution"
+  bottom: "dense3b27_bn"
+  top: "dense3b27_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b27_dropout"
+  type: "Dropout"
+  bottom: "dense3b27_conv"
+  top: "dense3b27_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b27_concat"
+  type: "Concat"
+  bottom: "dense3b26_concat"
+  bottom: "dense3b27_dropout"
+  top: "dense3b27_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a28_bn"
+  type: "BatchNorm"
+  bottom: "dense3b27_concat"
+  top: "dense3a28_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a28_scale"
+  type: "Scale"
+  bottom: "dense3a28_bn"
+  top: "dense3a28_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a28_relu"
+  type: "ReLU"
+  bottom: "dense3a28_bn"
+  top: "dense3a28_bn"
+}
+layer {
+  name: "dense3a28_conv"
+  type: "Convolution"
+  bottom: "dense3a28_bn"
+  top: "dense3a28_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a28_dropout"
+  type: "Dropout"
+  bottom: "dense3a28_conv"
+  top: "dense3a28_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b28_bn"
+  type: "BatchNorm"
+  bottom: "dense3a28_dropout"
+  top: "dense3b28_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b28_scale"
+  type: "Scale"
+  bottom: "dense3b28_bn"
+  top: "dense3b28_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b28_relu"
+  type: "ReLU"
+  bottom: "dense3b28_bn"
+  top: "dense3b28_bn"
+}
+layer {
+  name: "dense3b28_conv"
+  type: "Convolution"
+  bottom: "dense3b28_bn"
+  top: "dense3b28_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b28_dropout"
+  type: "Dropout"
+  bottom: "dense3b28_conv"
+  top: "dense3b28_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b28_concat"
+  type: "Concat"
+  bottom: "dense3b27_concat"
+  bottom: "dense3b28_dropout"
+  top: "dense3b28_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a29_bn"
+  type: "BatchNorm"
+  bottom: "dense3b28_concat"
+  top: "dense3a29_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a29_scale"
+  type: "Scale"
+  bottom: "dense3a29_bn"
+  top: "dense3a29_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a29_relu"
+  type: "ReLU"
+  bottom: "dense3a29_bn"
+  top: "dense3a29_bn"
+}
+layer {
+  name: "dense3a29_conv"
+  type: "Convolution"
+  bottom: "dense3a29_bn"
+  top: "dense3a29_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a29_dropout"
+  type: "Dropout"
+  bottom: "dense3a29_conv"
+  top: "dense3a29_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b29_bn"
+  type: "BatchNorm"
+  bottom: "dense3a29_dropout"
+  top: "dense3b29_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b29_scale"
+  type: "Scale"
+  bottom: "dense3b29_bn"
+  top: "dense3b29_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b29_relu"
+  type: "ReLU"
+  bottom: "dense3b29_bn"
+  top: "dense3b29_bn"
+}
+layer {
+  name: "dense3b29_conv"
+  type: "Convolution"
+  bottom: "dense3b29_bn"
+  top: "dense3b29_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b29_dropout"
+  type: "Dropout"
+  bottom: "dense3b29_conv"
+  top: "dense3b29_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b29_concat"
+  type: "Concat"
+  bottom: "dense3b28_concat"
+  bottom: "dense3b29_dropout"
+  top: "dense3b29_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a30_bn"
+  type: "BatchNorm"
+  bottom: "dense3b29_concat"
+  top: "dense3a30_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a30_scale"
+  type: "Scale"
+  bottom: "dense3a30_bn"
+  top: "dense3a30_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a30_relu"
+  type: "ReLU"
+  bottom: "dense3a30_bn"
+  top: "dense3a30_bn"
+}
+layer {
+  name: "dense3a30_conv"
+  type: "Convolution"
+  bottom: "dense3a30_bn"
+  top: "dense3a30_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a30_dropout"
+  type: "Dropout"
+  bottom: "dense3a30_conv"
+  top: "dense3a30_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b30_bn"
+  type: "BatchNorm"
+  bottom: "dense3a30_dropout"
+  top: "dense3b30_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b30_scale"
+  type: "Scale"
+  bottom: "dense3b30_bn"
+  top: "dense3b30_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b30_relu"
+  type: "ReLU"
+  bottom: "dense3b30_bn"
+  top: "dense3b30_bn"
+}
+layer {
+  name: "dense3b30_conv"
+  type: "Convolution"
+  bottom: "dense3b30_bn"
+  top: "dense3b30_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b30_dropout"
+  type: "Dropout"
+  bottom: "dense3b30_conv"
+  top: "dense3b30_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b30_concat"
+  type: "Concat"
+  bottom: "dense3b29_concat"
+  bottom: "dense3b30_dropout"
+  top: "dense3b30_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a31_bn"
+  type: "BatchNorm"
+  bottom: "dense3b30_concat"
+  top: "dense3a31_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a31_scale"
+  type: "Scale"
+  bottom: "dense3a31_bn"
+  top: "dense3a31_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a31_relu"
+  type: "ReLU"
+  bottom: "dense3a31_bn"
+  top: "dense3a31_bn"
+}
+layer {
+  name: "dense3a31_conv"
+  type: "Convolution"
+  bottom: "dense3a31_bn"
+  top: "dense3a31_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a31_dropout"
+  type: "Dropout"
+  bottom: "dense3a31_conv"
+  top: "dense3a31_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b31_bn"
+  type: "BatchNorm"
+  bottom: "dense3a31_dropout"
+  top: "dense3b31_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b31_scale"
+  type: "Scale"
+  bottom: "dense3b31_bn"
+  top: "dense3b31_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b31_relu"
+  type: "ReLU"
+  bottom: "dense3b31_bn"
+  top: "dense3b31_bn"
+}
+layer {
+  name: "dense3b31_conv"
+  type: "Convolution"
+  bottom: "dense3b31_bn"
+  top: "dense3b31_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b31_dropout"
+  type: "Dropout"
+  bottom: "dense3b31_conv"
+  top: "dense3b31_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b31_concat"
+  type: "Concat"
+  bottom: "dense3b30_concat"
+  bottom: "dense3b31_dropout"
+  top: "dense3b31_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a32_bn"
+  type: "BatchNorm"
+  bottom: "dense3b31_concat"
+  top: "dense3a32_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a32_scale"
+  type: "Scale"
+  bottom: "dense3a32_bn"
+  top: "dense3a32_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a32_relu"
+  type: "ReLU"
+  bottom: "dense3a32_bn"
+  top: "dense3a32_bn"
+}
+layer {
+  name: "dense3a32_conv"
+  type: "Convolution"
+  bottom: "dense3a32_bn"
+  top: "dense3a32_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a32_dropout"
+  type: "Dropout"
+  bottom: "dense3a32_conv"
+  top: "dense3a32_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b32_bn"
+  type: "BatchNorm"
+  bottom: "dense3a32_dropout"
+  top: "dense3b32_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b32_scale"
+  type: "Scale"
+  bottom: "dense3b32_bn"
+  top: "dense3b32_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b32_relu"
+  type: "ReLU"
+  bottom: "dense3b32_bn"
+  top: "dense3b32_bn"
+}
+layer {
+  name: "dense3b32_conv"
+  type: "Convolution"
+  bottom: "dense3b32_bn"
+  top: "dense3b32_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b32_dropout"
+  type: "Dropout"
+  bottom: "dense3b32_conv"
+  top: "dense3b32_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b32_concat"
+  type: "Concat"
+  bottom: "dense3b31_concat"
+  bottom: "dense3b32_dropout"
+  top: "dense3b32_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a33_bn"
+  type: "BatchNorm"
+  bottom: "dense3b32_concat"
+  top: "dense3a33_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a33_scale"
+  type: "Scale"
+  bottom: "dense3a33_bn"
+  top: "dense3a33_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a33_relu"
+  type: "ReLU"
+  bottom: "dense3a33_bn"
+  top: "dense3a33_bn"
+}
+layer {
+  name: "dense3a33_conv"
+  type: "Convolution"
+  bottom: "dense3a33_bn"
+  top: "dense3a33_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a33_dropout"
+  type: "Dropout"
+  bottom: "dense3a33_conv"
+  top: "dense3a33_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b33_bn"
+  type: "BatchNorm"
+  bottom: "dense3a33_dropout"
+  top: "dense3b33_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b33_scale"
+  type: "Scale"
+  bottom: "dense3b33_bn"
+  top: "dense3b33_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b33_relu"
+  type: "ReLU"
+  bottom: "dense3b33_bn"
+  top: "dense3b33_bn"
+}
+layer {
+  name: "dense3b33_conv"
+  type: "Convolution"
+  bottom: "dense3b33_bn"
+  top: "dense3b33_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b33_dropout"
+  type: "Dropout"
+  bottom: "dense3b33_conv"
+  top: "dense3b33_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b33_concat"
+  type: "Concat"
+  bottom: "dense3b32_concat"
+  bottom: "dense3b33_dropout"
+  top: "dense3b33_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a34_bn"
+  type: "BatchNorm"
+  bottom: "dense3b33_concat"
+  top: "dense3a34_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a34_scale"
+  type: "Scale"
+  bottom: "dense3a34_bn"
+  top: "dense3a34_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a34_relu"
+  type: "ReLU"
+  bottom: "dense3a34_bn"
+  top: "dense3a34_bn"
+}
+layer {
+  name: "dense3a34_conv"
+  type: "Convolution"
+  bottom: "dense3a34_bn"
+  top: "dense3a34_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a34_dropout"
+  type: "Dropout"
+  bottom: "dense3a34_conv"
+  top: "dense3a34_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b34_bn"
+  type: "BatchNorm"
+  bottom: "dense3a34_dropout"
+  top: "dense3b34_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b34_scale"
+  type: "Scale"
+  bottom: "dense3b34_bn"
+  top: "dense3b34_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b34_relu"
+  type: "ReLU"
+  bottom: "dense3b34_bn"
+  top: "dense3b34_bn"
+}
+layer {
+  name: "dense3b34_conv"
+  type: "Convolution"
+  bottom: "dense3b34_bn"
+  top: "dense3b34_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b34_dropout"
+  type: "Dropout"
+  bottom: "dense3b34_conv"
+  top: "dense3b34_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b34_concat"
+  type: "Concat"
+  bottom: "dense3b33_concat"
+  bottom: "dense3b34_dropout"
+  top: "dense3b34_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a35_bn"
+  type: "BatchNorm"
+  bottom: "dense3b34_concat"
+  top: "dense3a35_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a35_scale"
+  type: "Scale"
+  bottom: "dense3a35_bn"
+  top: "dense3a35_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a35_relu"
+  type: "ReLU"
+  bottom: "dense3a35_bn"
+  top: "dense3a35_bn"
+}
+layer {
+  name: "dense3a35_conv"
+  type: "Convolution"
+  bottom: "dense3a35_bn"
+  top: "dense3a35_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a35_dropout"
+  type: "Dropout"
+  bottom: "dense3a35_conv"
+  top: "dense3a35_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b35_bn"
+  type: "BatchNorm"
+  bottom: "dense3a35_dropout"
+  top: "dense3b35_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b35_scale"
+  type: "Scale"
+  bottom: "dense3b35_bn"
+  top: "dense3b35_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b35_relu"
+  type: "ReLU"
+  bottom: "dense3b35_bn"
+  top: "dense3b35_bn"
+}
+layer {
+  name: "dense3b35_conv"
+  type: "Convolution"
+  bottom: "dense3b35_bn"
+  top: "dense3b35_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b35_dropout"
+  type: "Dropout"
+  bottom: "dense3b35_conv"
+  top: "dense3b35_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b35_concat"
+  type: "Concat"
+  bottom: "dense3b34_concat"
+  bottom: "dense3b35_dropout"
+  top: "dense3b35_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a36_bn"
+  type: "BatchNorm"
+  bottom: "dense3b35_concat"
+  top: "dense3a36_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a36_scale"
+  type: "Scale"
+  bottom: "dense3a36_bn"
+  top: "dense3a36_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a36_relu"
+  type: "ReLU"
+  bottom: "dense3a36_bn"
+  top: "dense3a36_bn"
+}
+layer {
+  name: "dense3a36_conv"
+  type: "Convolution"
+  bottom: "dense3a36_bn"
+  top: "dense3a36_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a36_dropout"
+  type: "Dropout"
+  bottom: "dense3a36_conv"
+  top: "dense3a36_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b36_bn"
+  type: "BatchNorm"
+  bottom: "dense3a36_dropout"
+  top: "dense3b36_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b36_scale"
+  type: "Scale"
+  bottom: "dense3b36_bn"
+  top: "dense3b36_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b36_relu"
+  type: "ReLU"
+  bottom: "dense3b36_bn"
+  top: "dense3b36_bn"
+}
+layer {
+  name: "dense3b36_conv"
+  type: "Convolution"
+  bottom: "dense3b36_bn"
+  top: "dense3b36_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b36_dropout"
+  type: "Dropout"
+  bottom: "dense3b36_conv"
+  top: "dense3b36_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b36_concat"
+  type: "Concat"
+  bottom: "dense3b35_concat"
+  bottom: "dense3b36_dropout"
+  top: "dense3b36_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a37_bn"
+  type: "BatchNorm"
+  bottom: "dense3b36_concat"
+  top: "dense3a37_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a37_scale"
+  type: "Scale"
+  bottom: "dense3a37_bn"
+  top: "dense3a37_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a37_relu"
+  type: "ReLU"
+  bottom: "dense3a37_bn"
+  top: "dense3a37_bn"
+}
+layer {
+  name: "dense3a37_conv"
+  type: "Convolution"
+  bottom: "dense3a37_bn"
+  top: "dense3a37_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a37_dropout"
+  type: "Dropout"
+  bottom: "dense3a37_conv"
+  top: "dense3a37_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b37_bn"
+  type: "BatchNorm"
+  bottom: "dense3a37_dropout"
+  top: "dense3b37_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b37_scale"
+  type: "Scale"
+  bottom: "dense3b37_bn"
+  top: "dense3b37_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b37_relu"
+  type: "ReLU"
+  bottom: "dense3b37_bn"
+  top: "dense3b37_bn"
+}
+layer {
+  name: "dense3b37_conv"
+  type: "Convolution"
+  bottom: "dense3b37_bn"
+  top: "dense3b37_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b37_dropout"
+  type: "Dropout"
+  bottom: "dense3b37_conv"
+  top: "dense3b37_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b37_concat"
+  type: "Concat"
+  bottom: "dense3b36_concat"
+  bottom: "dense3b37_dropout"
+  top: "dense3b37_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a38_bn"
+  type: "BatchNorm"
+  bottom: "dense3b37_concat"
+  top: "dense3a38_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a38_scale"
+  type: "Scale"
+  bottom: "dense3a38_bn"
+  top: "dense3a38_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a38_relu"
+  type: "ReLU"
+  bottom: "dense3a38_bn"
+  top: "dense3a38_bn"
+}
+layer {
+  name: "dense3a38_conv"
+  type: "Convolution"
+  bottom: "dense3a38_bn"
+  top: "dense3a38_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a38_dropout"
+  type: "Dropout"
+  bottom: "dense3a38_conv"
+  top: "dense3a38_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b38_bn"
+  type: "BatchNorm"
+  bottom: "dense3a38_dropout"
+  top: "dense3b38_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b38_scale"
+  type: "Scale"
+  bottom: "dense3b38_bn"
+  top: "dense3b38_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b38_relu"
+  type: "ReLU"
+  bottom: "dense3b38_bn"
+  top: "dense3b38_bn"
+}
+layer {
+  name: "dense3b38_conv"
+  type: "Convolution"
+  bottom: "dense3b38_bn"
+  top: "dense3b38_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b38_dropout"
+  type: "Dropout"
+  bottom: "dense3b38_conv"
+  top: "dense3b38_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b38_concat"
+  type: "Concat"
+  bottom: "dense3b37_concat"
+  bottom: "dense3b38_dropout"
+  top: "dense3b38_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a39_bn"
+  type: "BatchNorm"
+  bottom: "dense3b38_concat"
+  top: "dense3a39_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a39_scale"
+  type: "Scale"
+  bottom: "dense3a39_bn"
+  top: "dense3a39_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a39_relu"
+  type: "ReLU"
+  bottom: "dense3a39_bn"
+  top: "dense3a39_bn"
+}
+layer {
+  name: "dense3a39_conv"
+  type: "Convolution"
+  bottom: "dense3a39_bn"
+  top: "dense3a39_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a39_dropout"
+  type: "Dropout"
+  bottom: "dense3a39_conv"
+  top: "dense3a39_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b39_bn"
+  type: "BatchNorm"
+  bottom: "dense3a39_dropout"
+  top: "dense3b39_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b39_scale"
+  type: "Scale"
+  bottom: "dense3b39_bn"
+  top: "dense3b39_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b39_relu"
+  type: "ReLU"
+  bottom: "dense3b39_bn"
+  top: "dense3b39_bn"
+}
+layer {
+  name: "dense3b39_conv"
+  type: "Convolution"
+  bottom: "dense3b39_bn"
+  top: "dense3b39_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b39_dropout"
+  type: "Dropout"
+  bottom: "dense3b39_conv"
+  top: "dense3b39_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b39_concat"
+  type: "Concat"
+  bottom: "dense3b38_concat"
+  bottom: "dense3b39_dropout"
+  top: "dense3b39_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a40_bn"
+  type: "BatchNorm"
+  bottom: "dense3b39_concat"
+  top: "dense3a40_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a40_scale"
+  type: "Scale"
+  bottom: "dense3a40_bn"
+  top: "dense3a40_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a40_relu"
+  type: "ReLU"
+  bottom: "dense3a40_bn"
+  top: "dense3a40_bn"
+}
+layer {
+  name: "dense3a40_conv"
+  type: "Convolution"
+  bottom: "dense3a40_bn"
+  top: "dense3a40_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a40_dropout"
+  type: "Dropout"
+  bottom: "dense3a40_conv"
+  top: "dense3a40_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b40_bn"
+  type: "BatchNorm"
+  bottom: "dense3a40_dropout"
+  top: "dense3b40_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b40_scale"
+  type: "Scale"
+  bottom: "dense3b40_bn"
+  top: "dense3b40_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b40_relu"
+  type: "ReLU"
+  bottom: "dense3b40_bn"
+  top: "dense3b40_bn"
+}
+layer {
+  name: "dense3b40_conv"
+  type: "Convolution"
+  bottom: "dense3b40_bn"
+  top: "dense3b40_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b40_dropout"
+  type: "Dropout"
+  bottom: "dense3b40_conv"
+  top: "dense3b40_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b40_concat"
+  type: "Concat"
+  bottom: "dense3b39_concat"
+  bottom: "dense3b40_dropout"
+  top: "dense3b40_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a41_bn"
+  type: "BatchNorm"
+  bottom: "dense3b40_concat"
+  top: "dense3a41_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a41_scale"
+  type: "Scale"
+  bottom: "dense3a41_bn"
+  top: "dense3a41_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a41_relu"
+  type: "ReLU"
+  bottom: "dense3a41_bn"
+  top: "dense3a41_bn"
+}
+layer {
+  name: "dense3a41_conv"
+  type: "Convolution"
+  bottom: "dense3a41_bn"
+  top: "dense3a41_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a41_dropout"
+  type: "Dropout"
+  bottom: "dense3a41_conv"
+  top: "dense3a41_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b41_bn"
+  type: "BatchNorm"
+  bottom: "dense3a41_dropout"
+  top: "dense3b41_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b41_scale"
+  type: "Scale"
+  bottom: "dense3b41_bn"
+  top: "dense3b41_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b41_relu"
+  type: "ReLU"
+  bottom: "dense3b41_bn"
+  top: "dense3b41_bn"
+}
+layer {
+  name: "dense3b41_conv"
+  type: "Convolution"
+  bottom: "dense3b41_bn"
+  top: "dense3b41_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b41_dropout"
+  type: "Dropout"
+  bottom: "dense3b41_conv"
+  top: "dense3b41_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b41_concat"
+  type: "Concat"
+  bottom: "dense3b40_concat"
+  bottom: "dense3b41_dropout"
+  top: "dense3b41_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a42_bn"
+  type: "BatchNorm"
+  bottom: "dense3b41_concat"
+  top: "dense3a42_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a42_scale"
+  type: "Scale"
+  bottom: "dense3a42_bn"
+  top: "dense3a42_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a42_relu"
+  type: "ReLU"
+  bottom: "dense3a42_bn"
+  top: "dense3a42_bn"
+}
+layer {
+  name: "dense3a42_conv"
+  type: "Convolution"
+  bottom: "dense3a42_bn"
+  top: "dense3a42_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a42_dropout"
+  type: "Dropout"
+  bottom: "dense3a42_conv"
+  top: "dense3a42_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b42_bn"
+  type: "BatchNorm"
+  bottom: "dense3a42_dropout"
+  top: "dense3b42_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b42_scale"
+  type: "Scale"
+  bottom: "dense3b42_bn"
+  top: "dense3b42_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b42_relu"
+  type: "ReLU"
+  bottom: "dense3b42_bn"
+  top: "dense3b42_bn"
+}
+layer {
+  name: "dense3b42_conv"
+  type: "Convolution"
+  bottom: "dense3b42_bn"
+  top: "dense3b42_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b42_dropout"
+  type: "Dropout"
+  bottom: "dense3b42_conv"
+  top: "dense3b42_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b42_concat"
+  type: "Concat"
+  bottom: "dense3b41_concat"
+  bottom: "dense3b42_dropout"
+  top: "dense3b42_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a43_bn"
+  type: "BatchNorm"
+  bottom: "dense3b42_concat"
+  top: "dense3a43_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a43_scale"
+  type: "Scale"
+  bottom: "dense3a43_bn"
+  top: "dense3a43_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a43_relu"
+  type: "ReLU"
+  bottom: "dense3a43_bn"
+  top: "dense3a43_bn"
+}
+layer {
+  name: "dense3a43_conv"
+  type: "Convolution"
+  bottom: "dense3a43_bn"
+  top: "dense3a43_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a43_dropout"
+  type: "Dropout"
+  bottom: "dense3a43_conv"
+  top: "dense3a43_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b43_bn"
+  type: "BatchNorm"
+  bottom: "dense3a43_dropout"
+  top: "dense3b43_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b43_scale"
+  type: "Scale"
+  bottom: "dense3b43_bn"
+  top: "dense3b43_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b43_relu"
+  type: "ReLU"
+  bottom: "dense3b43_bn"
+  top: "dense3b43_bn"
+}
+layer {
+  name: "dense3b43_conv"
+  type: "Convolution"
+  bottom: "dense3b43_bn"
+  top: "dense3b43_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b43_dropout"
+  type: "Dropout"
+  bottom: "dense3b43_conv"
+  top: "dense3b43_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b43_concat"
+  type: "Concat"
+  bottom: "dense3b42_concat"
+  bottom: "dense3b43_dropout"
+  top: "dense3b43_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a44_bn"
+  type: "BatchNorm"
+  bottom: "dense3b43_concat"
+  top: "dense3a44_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a44_scale"
+  type: "Scale"
+  bottom: "dense3a44_bn"
+  top: "dense3a44_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a44_relu"
+  type: "ReLU"
+  bottom: "dense3a44_bn"
+  top: "dense3a44_bn"
+}
+layer {
+  name: "dense3a44_conv"
+  type: "Convolution"
+  bottom: "dense3a44_bn"
+  top: "dense3a44_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a44_dropout"
+  type: "Dropout"
+  bottom: "dense3a44_conv"
+  top: "dense3a44_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b44_bn"
+  type: "BatchNorm"
+  bottom: "dense3a44_dropout"
+  top: "dense3b44_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b44_scale"
+  type: "Scale"
+  bottom: "dense3b44_bn"
+  top: "dense3b44_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b44_relu"
+  type: "ReLU"
+  bottom: "dense3b44_bn"
+  top: "dense3b44_bn"
+}
+layer {
+  name: "dense3b44_conv"
+  type: "Convolution"
+  bottom: "dense3b44_bn"
+  top: "dense3b44_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b44_dropout"
+  type: "Dropout"
+  bottom: "dense3b44_conv"
+  top: "dense3b44_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b44_concat"
+  type: "Concat"
+  bottom: "dense3b43_concat"
+  bottom: "dense3b44_dropout"
+  top: "dense3b44_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a45_bn"
+  type: "BatchNorm"
+  bottom: "dense3b44_concat"
+  top: "dense3a45_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a45_scale"
+  type: "Scale"
+  bottom: "dense3a45_bn"
+  top: "dense3a45_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a45_relu"
+  type: "ReLU"
+  bottom: "dense3a45_bn"
+  top: "dense3a45_bn"
+}
+layer {
+  name: "dense3a45_conv"
+  type: "Convolution"
+  bottom: "dense3a45_bn"
+  top: "dense3a45_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a45_dropout"
+  type: "Dropout"
+  bottom: "dense3a45_conv"
+  top: "dense3a45_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b45_bn"
+  type: "BatchNorm"
+  bottom: "dense3a45_dropout"
+  top: "dense3b45_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b45_scale"
+  type: "Scale"
+  bottom: "dense3b45_bn"
+  top: "dense3b45_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b45_relu"
+  type: "ReLU"
+  bottom: "dense3b45_bn"
+  top: "dense3b45_bn"
+}
+layer {
+  name: "dense3b45_conv"
+  type: "Convolution"
+  bottom: "dense3b45_bn"
+  top: "dense3b45_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b45_dropout"
+  type: "Dropout"
+  bottom: "dense3b45_conv"
+  top: "dense3b45_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b45_concat"
+  type: "Concat"
+  bottom: "dense3b44_concat"
+  bottom: "dense3b45_dropout"
+  top: "dense3b45_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a46_bn"
+  type: "BatchNorm"
+  bottom: "dense3b45_concat"
+  top: "dense3a46_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a46_scale"
+  type: "Scale"
+  bottom: "dense3a46_bn"
+  top: "dense3a46_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a46_relu"
+  type: "ReLU"
+  bottom: "dense3a46_bn"
+  top: "dense3a46_bn"
+}
+layer {
+  name: "dense3a46_conv"
+  type: "Convolution"
+  bottom: "dense3a46_bn"
+  top: "dense3a46_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a46_dropout"
+  type: "Dropout"
+  bottom: "dense3a46_conv"
+  top: "dense3a46_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b46_bn"
+  type: "BatchNorm"
+  bottom: "dense3a46_dropout"
+  top: "dense3b46_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b46_scale"
+  type: "Scale"
+  bottom: "dense3b46_bn"
+  top: "dense3b46_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b46_relu"
+  type: "ReLU"
+  bottom: "dense3b46_bn"
+  top: "dense3b46_bn"
+}
+layer {
+  name: "dense3b46_conv"
+  type: "Convolution"
+  bottom: "dense3b46_bn"
+  top: "dense3b46_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b46_dropout"
+  type: "Dropout"
+  bottom: "dense3b46_conv"
+  top: "dense3b46_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b46_concat"
+  type: "Concat"
+  bottom: "dense3b45_concat"
+  bottom: "dense3b46_dropout"
+  top: "dense3b46_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a47_bn"
+  type: "BatchNorm"
+  bottom: "dense3b46_concat"
+  top: "dense3a47_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a47_scale"
+  type: "Scale"
+  bottom: "dense3a47_bn"
+  top: "dense3a47_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a47_relu"
+  type: "ReLU"
+  bottom: "dense3a47_bn"
+  top: "dense3a47_bn"
+}
+layer {
+  name: "dense3a47_conv"
+  type: "Convolution"
+  bottom: "dense3a47_bn"
+  top: "dense3a47_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a47_dropout"
+  type: "Dropout"
+  bottom: "dense3a47_conv"
+  top: "dense3a47_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b47_bn"
+  type: "BatchNorm"
+  bottom: "dense3a47_dropout"
+  top: "dense3b47_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b47_scale"
+  type: "Scale"
+  bottom: "dense3b47_bn"
+  top: "dense3b47_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b47_relu"
+  type: "ReLU"
+  bottom: "dense3b47_bn"
+  top: "dense3b47_bn"
+}
+layer {
+  name: "dense3b47_conv"
+  type: "Convolution"
+  bottom: "dense3b47_bn"
+  top: "dense3b47_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b47_dropout"
+  type: "Dropout"
+  bottom: "dense3b47_conv"
+  top: "dense3b47_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b47_concat"
+  type: "Concat"
+  bottom: "dense3b46_concat"
+  bottom: "dense3b47_dropout"
+  top: "dense3b47_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3a48_bn"
+  type: "BatchNorm"
+  bottom: "dense3b47_concat"
+  top: "dense3a48_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3a48_scale"
+  type: "Scale"
+  bottom: "dense3a48_bn"
+  top: "dense3a48_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3a48_relu"
+  type: "ReLU"
+  bottom: "dense3a48_bn"
+  top: "dense3a48_bn"
+}
+layer {
+  name: "dense3a48_conv"
+  type: "Convolution"
+  bottom: "dense3a48_bn"
+  top: "dense3a48_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3a48_dropout"
+  type: "Dropout"
+  bottom: "dense3a48_conv"
+  top: "dense3a48_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b48_bn"
+  type: "BatchNorm"
+  bottom: "dense3a48_dropout"
+  top: "dense3b48_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b48_scale"
+  type: "Scale"
+  bottom: "dense3b48_bn"
+  top: "dense3b48_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b48_relu"
+  type: "ReLU"
+  bottom: "dense3b48_bn"
+  top: "dense3b48_bn"
+}
+layer {
+  name: "dense3b48_conv"
+  type: "Convolution"
+  bottom: "dense3b48_bn"
+  top: "dense3b48_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b48_dropout"
+  type: "Dropout"
+  bottom: "dense3b48_conv"
+  top: "dense3b48_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3b48_concat"
+  type: "Concat"
+  bottom: "dense3b47_concat"
+  bottom: "dense3b48_dropout"
+  top: "dense3b48_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense3b49_bn"
+  type: "BatchNorm"
+  bottom: "dense3b48_concat"
+  top: "dense3b49_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense3b49_scale"
+  type: "Scale"
+  bottom: "dense3b49_bn"
+  top: "dense3b49_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense3b49_relu"
+  type: "ReLU"
+  bottom: "dense3b49_bn"
+  top: "dense3b49_bn"
+}
+layer {
+  name: "dense3b49_conv"
+  type: "Convolution"
+  bottom: "dense3b49_bn"
+  top: "dense3b49_conv"
+  convolution_param {
+    num_output: 896
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense3b49_dropout"
+  type: "Dropout"
+  bottom: "dense3b49_conv"
+  top: "dense3b49_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense3_pool"
+  type: "Pooling"
+  bottom: "dense3b49_dropout"
+  top: "dense3_pool"
+  pooling_param {
+    pool: AVE
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dense4a1_bn"
+  type: "BatchNorm"
+  bottom: "dense3_pool"
+  top: "dense4a1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a1_scale"
+  type: "Scale"
+  bottom: "dense4a1_bn"
+  top: "dense4a1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a1_relu"
+  type: "ReLU"
+  bottom: "dense4a1_bn"
+  top: "dense4a1_bn"
+}
+layer {
+  name: "dense4a1_conv"
+  type: "Convolution"
+  bottom: "dense4a1_bn"
+  top: "dense4a1_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a1_dropout"
+  type: "Dropout"
+  bottom: "dense4a1_conv"
+  top: "dense4a1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b1_bn"
+  type: "BatchNorm"
+  bottom: "dense4a1_dropout"
+  top: "dense4b1_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b1_scale"
+  type: "Scale"
+  bottom: "dense4b1_bn"
+  top: "dense4b1_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b1_relu"
+  type: "ReLU"
+  bottom: "dense4b1_bn"
+  top: "dense4b1_bn"
+}
+layer {
+  name: "dense4b1_conv"
+  type: "Convolution"
+  bottom: "dense4b1_bn"
+  top: "dense4b1_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b1_dropout"
+  type: "Dropout"
+  bottom: "dense4b1_conv"
+  top: "dense4b1_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b1_concat"
+  type: "Concat"
+  bottom: "dense3_pool"
+  bottom: "dense4b1_dropout"
+  top: "dense4b1_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a2_bn"
+  type: "BatchNorm"
+  bottom: "dense4b1_concat"
+  top: "dense4a2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a2_scale"
+  type: "Scale"
+  bottom: "dense4a2_bn"
+  top: "dense4a2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a2_relu"
+  type: "ReLU"
+  bottom: "dense4a2_bn"
+  top: "dense4a2_bn"
+}
+layer {
+  name: "dense4a2_conv"
+  type: "Convolution"
+  bottom: "dense4a2_bn"
+  top: "dense4a2_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a2_dropout"
+  type: "Dropout"
+  bottom: "dense4a2_conv"
+  top: "dense4a2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b2_bn"
+  type: "BatchNorm"
+  bottom: "dense4a2_dropout"
+  top: "dense4b2_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b2_scale"
+  type: "Scale"
+  bottom: "dense4b2_bn"
+  top: "dense4b2_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b2_relu"
+  type: "ReLU"
+  bottom: "dense4b2_bn"
+  top: "dense4b2_bn"
+}
+layer {
+  name: "dense4b2_conv"
+  type: "Convolution"
+  bottom: "dense4b2_bn"
+  top: "dense4b2_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b2_dropout"
+  type: "Dropout"
+  bottom: "dense4b2_conv"
+  top: "dense4b2_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b2_concat"
+  type: "Concat"
+  bottom: "dense4b1_concat"
+  bottom: "dense4b2_dropout"
+  top: "dense4b2_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a3_bn"
+  type: "BatchNorm"
+  bottom: "dense4b2_concat"
+  top: "dense4a3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a3_scale"
+  type: "Scale"
+  bottom: "dense4a3_bn"
+  top: "dense4a3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a3_relu"
+  type: "ReLU"
+  bottom: "dense4a3_bn"
+  top: "dense4a3_bn"
+}
+layer {
+  name: "dense4a3_conv"
+  type: "Convolution"
+  bottom: "dense4a3_bn"
+  top: "dense4a3_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a3_dropout"
+  type: "Dropout"
+  bottom: "dense4a3_conv"
+  top: "dense4a3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b3_bn"
+  type: "BatchNorm"
+  bottom: "dense4a3_dropout"
+  top: "dense4b3_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b3_scale"
+  type: "Scale"
+  bottom: "dense4b3_bn"
+  top: "dense4b3_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b3_relu"
+  type: "ReLU"
+  bottom: "dense4b3_bn"
+  top: "dense4b3_bn"
+}
+layer {
+  name: "dense4b3_conv"
+  type: "Convolution"
+  bottom: "dense4b3_bn"
+  top: "dense4b3_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b3_dropout"
+  type: "Dropout"
+  bottom: "dense4b3_conv"
+  top: "dense4b3_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b3_concat"
+  type: "Concat"
+  bottom: "dense4b2_concat"
+  bottom: "dense4b3_dropout"
+  top: "dense4b3_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a4_bn"
+  type: "BatchNorm"
+  bottom: "dense4b3_concat"
+  top: "dense4a4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a4_scale"
+  type: "Scale"
+  bottom: "dense4a4_bn"
+  top: "dense4a4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a4_relu"
+  type: "ReLU"
+  bottom: "dense4a4_bn"
+  top: "dense4a4_bn"
+}
+layer {
+  name: "dense4a4_conv"
+  type: "Convolution"
+  bottom: "dense4a4_bn"
+  top: "dense4a4_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a4_dropout"
+  type: "Dropout"
+  bottom: "dense4a4_conv"
+  top: "dense4a4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b4_bn"
+  type: "BatchNorm"
+  bottom: "dense4a4_dropout"
+  top: "dense4b4_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b4_scale"
+  type: "Scale"
+  bottom: "dense4b4_bn"
+  top: "dense4b4_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b4_relu"
+  type: "ReLU"
+  bottom: "dense4b4_bn"
+  top: "dense4b4_bn"
+}
+layer {
+  name: "dense4b4_conv"
+  type: "Convolution"
+  bottom: "dense4b4_bn"
+  top: "dense4b4_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b4_dropout"
+  type: "Dropout"
+  bottom: "dense4b4_conv"
+  top: "dense4b4_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b4_concat"
+  type: "Concat"
+  bottom: "dense4b3_concat"
+  bottom: "dense4b4_dropout"
+  top: "dense4b4_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a5_bn"
+  type: "BatchNorm"
+  bottom: "dense4b4_concat"
+  top: "dense4a5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a5_scale"
+  type: "Scale"
+  bottom: "dense4a5_bn"
+  top: "dense4a5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a5_relu"
+  type: "ReLU"
+  bottom: "dense4a5_bn"
+  top: "dense4a5_bn"
+}
+layer {
+  name: "dense4a5_conv"
+  type: "Convolution"
+  bottom: "dense4a5_bn"
+  top: "dense4a5_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a5_dropout"
+  type: "Dropout"
+  bottom: "dense4a5_conv"
+  top: "dense4a5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b5_bn"
+  type: "BatchNorm"
+  bottom: "dense4a5_dropout"
+  top: "dense4b5_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b5_scale"
+  type: "Scale"
+  bottom: "dense4b5_bn"
+  top: "dense4b5_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b5_relu"
+  type: "ReLU"
+  bottom: "dense4b5_bn"
+  top: "dense4b5_bn"
+}
+layer {
+  name: "dense4b5_conv"
+  type: "Convolution"
+  bottom: "dense4b5_bn"
+  top: "dense4b5_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b5_dropout"
+  type: "Dropout"
+  bottom: "dense4b5_conv"
+  top: "dense4b5_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b5_concat"
+  type: "Concat"
+  bottom: "dense4b4_concat"
+  bottom: "dense4b5_dropout"
+  top: "dense4b5_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a6_bn"
+  type: "BatchNorm"
+  bottom: "dense4b5_concat"
+  top: "dense4a6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a6_scale"
+  type: "Scale"
+  bottom: "dense4a6_bn"
+  top: "dense4a6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a6_relu"
+  type: "ReLU"
+  bottom: "dense4a6_bn"
+  top: "dense4a6_bn"
+}
+layer {
+  name: "dense4a6_conv"
+  type: "Convolution"
+  bottom: "dense4a6_bn"
+  top: "dense4a6_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a6_dropout"
+  type: "Dropout"
+  bottom: "dense4a6_conv"
+  top: "dense4a6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b6_bn"
+  type: "BatchNorm"
+  bottom: "dense4a6_dropout"
+  top: "dense4b6_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b6_scale"
+  type: "Scale"
+  bottom: "dense4b6_bn"
+  top: "dense4b6_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b6_relu"
+  type: "ReLU"
+  bottom: "dense4b6_bn"
+  top: "dense4b6_bn"
+}
+layer {
+  name: "dense4b6_conv"
+  type: "Convolution"
+  bottom: "dense4b6_bn"
+  top: "dense4b6_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b6_dropout"
+  type: "Dropout"
+  bottom: "dense4b6_conv"
+  top: "dense4b6_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b6_concat"
+  type: "Concat"
+  bottom: "dense4b5_concat"
+  bottom: "dense4b6_dropout"
+  top: "dense4b6_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a7_bn"
+  type: "BatchNorm"
+  bottom: "dense4b6_concat"
+  top: "dense4a7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a7_scale"
+  type: "Scale"
+  bottom: "dense4a7_bn"
+  top: "dense4a7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a7_relu"
+  type: "ReLU"
+  bottom: "dense4a7_bn"
+  top: "dense4a7_bn"
+}
+layer {
+  name: "dense4a7_conv"
+  type: "Convolution"
+  bottom: "dense4a7_bn"
+  top: "dense4a7_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a7_dropout"
+  type: "Dropout"
+  bottom: "dense4a7_conv"
+  top: "dense4a7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b7_bn"
+  type: "BatchNorm"
+  bottom: "dense4a7_dropout"
+  top: "dense4b7_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b7_scale"
+  type: "Scale"
+  bottom: "dense4b7_bn"
+  top: "dense4b7_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b7_relu"
+  type: "ReLU"
+  bottom: "dense4b7_bn"
+  top: "dense4b7_bn"
+}
+layer {
+  name: "dense4b7_conv"
+  type: "Convolution"
+  bottom: "dense4b7_bn"
+  top: "dense4b7_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b7_dropout"
+  type: "Dropout"
+  bottom: "dense4b7_conv"
+  top: "dense4b7_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b7_concat"
+  type: "Concat"
+  bottom: "dense4b6_concat"
+  bottom: "dense4b7_dropout"
+  top: "dense4b7_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a8_bn"
+  type: "BatchNorm"
+  bottom: "dense4b7_concat"
+  top: "dense4a8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a8_scale"
+  type: "Scale"
+  bottom: "dense4a8_bn"
+  top: "dense4a8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a8_relu"
+  type: "ReLU"
+  bottom: "dense4a8_bn"
+  top: "dense4a8_bn"
+}
+layer {
+  name: "dense4a8_conv"
+  type: "Convolution"
+  bottom: "dense4a8_bn"
+  top: "dense4a8_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a8_dropout"
+  type: "Dropout"
+  bottom: "dense4a8_conv"
+  top: "dense4a8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b8_bn"
+  type: "BatchNorm"
+  bottom: "dense4a8_dropout"
+  top: "dense4b8_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b8_scale"
+  type: "Scale"
+  bottom: "dense4b8_bn"
+  top: "dense4b8_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b8_relu"
+  type: "ReLU"
+  bottom: "dense4b8_bn"
+  top: "dense4b8_bn"
+}
+layer {
+  name: "dense4b8_conv"
+  type: "Convolution"
+  bottom: "dense4b8_bn"
+  top: "dense4b8_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b8_dropout"
+  type: "Dropout"
+  bottom: "dense4b8_conv"
+  top: "dense4b8_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b8_concat"
+  type: "Concat"
+  bottom: "dense4b7_concat"
+  bottom: "dense4b8_dropout"
+  top: "dense4b8_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a9_bn"
+  type: "BatchNorm"
+  bottom: "dense4b8_concat"
+  top: "dense4a9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a9_scale"
+  type: "Scale"
+  bottom: "dense4a9_bn"
+  top: "dense4a9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a9_relu"
+  type: "ReLU"
+  bottom: "dense4a9_bn"
+  top: "dense4a9_bn"
+}
+layer {
+  name: "dense4a9_conv"
+  type: "Convolution"
+  bottom: "dense4a9_bn"
+  top: "dense4a9_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a9_dropout"
+  type: "Dropout"
+  bottom: "dense4a9_conv"
+  top: "dense4a9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b9_bn"
+  type: "BatchNorm"
+  bottom: "dense4a9_dropout"
+  top: "dense4b9_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b9_scale"
+  type: "Scale"
+  bottom: "dense4b9_bn"
+  top: "dense4b9_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b9_relu"
+  type: "ReLU"
+  bottom: "dense4b9_bn"
+  top: "dense4b9_bn"
+}
+layer {
+  name: "dense4b9_conv"
+  type: "Convolution"
+  bottom: "dense4b9_bn"
+  top: "dense4b9_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b9_dropout"
+  type: "Dropout"
+  bottom: "dense4b9_conv"
+  top: "dense4b9_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b9_concat"
+  type: "Concat"
+  bottom: "dense4b8_concat"
+  bottom: "dense4b9_dropout"
+  top: "dense4b9_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a10_bn"
+  type: "BatchNorm"
+  bottom: "dense4b9_concat"
+  top: "dense4a10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a10_scale"
+  type: "Scale"
+  bottom: "dense4a10_bn"
+  top: "dense4a10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a10_relu"
+  type: "ReLU"
+  bottom: "dense4a10_bn"
+  top: "dense4a10_bn"
+}
+layer {
+  name: "dense4a10_conv"
+  type: "Convolution"
+  bottom: "dense4a10_bn"
+  top: "dense4a10_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a10_dropout"
+  type: "Dropout"
+  bottom: "dense4a10_conv"
+  top: "dense4a10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b10_bn"
+  type: "BatchNorm"
+  bottom: "dense4a10_dropout"
+  top: "dense4b10_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b10_scale"
+  type: "Scale"
+  bottom: "dense4b10_bn"
+  top: "dense4b10_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b10_relu"
+  type: "ReLU"
+  bottom: "dense4b10_bn"
+  top: "dense4b10_bn"
+}
+layer {
+  name: "dense4b10_conv"
+  type: "Convolution"
+  bottom: "dense4b10_bn"
+  top: "dense4b10_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b10_dropout"
+  type: "Dropout"
+  bottom: "dense4b10_conv"
+  top: "dense4b10_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b10_concat"
+  type: "Concat"
+  bottom: "dense4b9_concat"
+  bottom: "dense4b10_dropout"
+  top: "dense4b10_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a11_bn"
+  type: "BatchNorm"
+  bottom: "dense4b10_concat"
+  top: "dense4a11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a11_scale"
+  type: "Scale"
+  bottom: "dense4a11_bn"
+  top: "dense4a11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a11_relu"
+  type: "ReLU"
+  bottom: "dense4a11_bn"
+  top: "dense4a11_bn"
+}
+layer {
+  name: "dense4a11_conv"
+  type: "Convolution"
+  bottom: "dense4a11_bn"
+  top: "dense4a11_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a11_dropout"
+  type: "Dropout"
+  bottom: "dense4a11_conv"
+  top: "dense4a11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b11_bn"
+  type: "BatchNorm"
+  bottom: "dense4a11_dropout"
+  top: "dense4b11_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b11_scale"
+  type: "Scale"
+  bottom: "dense4b11_bn"
+  top: "dense4b11_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b11_relu"
+  type: "ReLU"
+  bottom: "dense4b11_bn"
+  top: "dense4b11_bn"
+}
+layer {
+  name: "dense4b11_conv"
+  type: "Convolution"
+  bottom: "dense4b11_bn"
+  top: "dense4b11_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b11_dropout"
+  type: "Dropout"
+  bottom: "dense4b11_conv"
+  top: "dense4b11_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b11_concat"
+  type: "Concat"
+  bottom: "dense4b10_concat"
+  bottom: "dense4b11_dropout"
+  top: "dense4b11_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a12_bn"
+  type: "BatchNorm"
+  bottom: "dense4b11_concat"
+  top: "dense4a12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a12_scale"
+  type: "Scale"
+  bottom: "dense4a12_bn"
+  top: "dense4a12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a12_relu"
+  type: "ReLU"
+  bottom: "dense4a12_bn"
+  top: "dense4a12_bn"
+}
+layer {
+  name: "dense4a12_conv"
+  type: "Convolution"
+  bottom: "dense4a12_bn"
+  top: "dense4a12_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a12_dropout"
+  type: "Dropout"
+  bottom: "dense4a12_conv"
+  top: "dense4a12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b12_bn"
+  type: "BatchNorm"
+  bottom: "dense4a12_dropout"
+  top: "dense4b12_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b12_scale"
+  type: "Scale"
+  bottom: "dense4b12_bn"
+  top: "dense4b12_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b12_relu"
+  type: "ReLU"
+  bottom: "dense4b12_bn"
+  top: "dense4b12_bn"
+}
+layer {
+  name: "dense4b12_conv"
+  type: "Convolution"
+  bottom: "dense4b12_bn"
+  top: "dense4b12_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b12_dropout"
+  type: "Dropout"
+  bottom: "dense4b12_conv"
+  top: "dense4b12_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b12_concat"
+  type: "Concat"
+  bottom: "dense4b11_concat"
+  bottom: "dense4b12_dropout"
+  top: "dense4b12_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a13_bn"
+  type: "BatchNorm"
+  bottom: "dense4b12_concat"
+  top: "dense4a13_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a13_scale"
+  type: "Scale"
+  bottom: "dense4a13_bn"
+  top: "dense4a13_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a13_relu"
+  type: "ReLU"
+  bottom: "dense4a13_bn"
+  top: "dense4a13_bn"
+}
+layer {
+  name: "dense4a13_conv"
+  type: "Convolution"
+  bottom: "dense4a13_bn"
+  top: "dense4a13_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a13_dropout"
+  type: "Dropout"
+  bottom: "dense4a13_conv"
+  top: "dense4a13_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b13_bn"
+  type: "BatchNorm"
+  bottom: "dense4a13_dropout"
+  top: "dense4b13_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b13_scale"
+  type: "Scale"
+  bottom: "dense4b13_bn"
+  top: "dense4b13_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b13_relu"
+  type: "ReLU"
+  bottom: "dense4b13_bn"
+  top: "dense4b13_bn"
+}
+layer {
+  name: "dense4b13_conv"
+  type: "Convolution"
+  bottom: "dense4b13_bn"
+  top: "dense4b13_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b13_dropout"
+  type: "Dropout"
+  bottom: "dense4b13_conv"
+  top: "dense4b13_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b13_concat"
+  type: "Concat"
+  bottom: "dense4b12_concat"
+  bottom: "dense4b13_dropout"
+  top: "dense4b13_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a14_bn"
+  type: "BatchNorm"
+  bottom: "dense4b13_concat"
+  top: "dense4a14_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a14_scale"
+  type: "Scale"
+  bottom: "dense4a14_bn"
+  top: "dense4a14_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a14_relu"
+  type: "ReLU"
+  bottom: "dense4a14_bn"
+  top: "dense4a14_bn"
+}
+layer {
+  name: "dense4a14_conv"
+  type: "Convolution"
+  bottom: "dense4a14_bn"
+  top: "dense4a14_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a14_dropout"
+  type: "Dropout"
+  bottom: "dense4a14_conv"
+  top: "dense4a14_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b14_bn"
+  type: "BatchNorm"
+  bottom: "dense4a14_dropout"
+  top: "dense4b14_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b14_scale"
+  type: "Scale"
+  bottom: "dense4b14_bn"
+  top: "dense4b14_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b14_relu"
+  type: "ReLU"
+  bottom: "dense4b14_bn"
+  top: "dense4b14_bn"
+}
+layer {
+  name: "dense4b14_conv"
+  type: "Convolution"
+  bottom: "dense4b14_bn"
+  top: "dense4b14_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b14_dropout"
+  type: "Dropout"
+  bottom: "dense4b14_conv"
+  top: "dense4b14_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b14_concat"
+  type: "Concat"
+  bottom: "dense4b13_concat"
+  bottom: "dense4b14_dropout"
+  top: "dense4b14_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a15_bn"
+  type: "BatchNorm"
+  bottom: "dense4b14_concat"
+  top: "dense4a15_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a15_scale"
+  type: "Scale"
+  bottom: "dense4a15_bn"
+  top: "dense4a15_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a15_relu"
+  type: "ReLU"
+  bottom: "dense4a15_bn"
+  top: "dense4a15_bn"
+}
+layer {
+  name: "dense4a15_conv"
+  type: "Convolution"
+  bottom: "dense4a15_bn"
+  top: "dense4a15_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a15_dropout"
+  type: "Dropout"
+  bottom: "dense4a15_conv"
+  top: "dense4a15_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b15_bn"
+  type: "BatchNorm"
+  bottom: "dense4a15_dropout"
+  top: "dense4b15_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b15_scale"
+  type: "Scale"
+  bottom: "dense4b15_bn"
+  top: "dense4b15_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b15_relu"
+  type: "ReLU"
+  bottom: "dense4b15_bn"
+  top: "dense4b15_bn"
+}
+layer {
+  name: "dense4b15_conv"
+  type: "Convolution"
+  bottom: "dense4b15_bn"
+  top: "dense4b15_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b15_dropout"
+  type: "Dropout"
+  bottom: "dense4b15_conv"
+  top: "dense4b15_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b15_concat"
+  type: "Concat"
+  bottom: "dense4b14_concat"
+  bottom: "dense4b15_dropout"
+  top: "dense4b15_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a16_bn"
+  type: "BatchNorm"
+  bottom: "dense4b15_concat"
+  top: "dense4a16_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a16_scale"
+  type: "Scale"
+  bottom: "dense4a16_bn"
+  top: "dense4a16_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a16_relu"
+  type: "ReLU"
+  bottom: "dense4a16_bn"
+  top: "dense4a16_bn"
+}
+layer {
+  name: "dense4a16_conv"
+  type: "Convolution"
+  bottom: "dense4a16_bn"
+  top: "dense4a16_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a16_dropout"
+  type: "Dropout"
+  bottom: "dense4a16_conv"
+  top: "dense4a16_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b16_bn"
+  type: "BatchNorm"
+  bottom: "dense4a16_dropout"
+  top: "dense4b16_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b16_scale"
+  type: "Scale"
+  bottom: "dense4b16_bn"
+  top: "dense4b16_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b16_relu"
+  type: "ReLU"
+  bottom: "dense4b16_bn"
+  top: "dense4b16_bn"
+}
+layer {
+  name: "dense4b16_conv"
+  type: "Convolution"
+  bottom: "dense4b16_bn"
+  top: "dense4b16_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b16_dropout"
+  type: "Dropout"
+  bottom: "dense4b16_conv"
+  top: "dense4b16_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b16_concat"
+  type: "Concat"
+  bottom: "dense4b15_concat"
+  bottom: "dense4b16_dropout"
+  top: "dense4b16_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a17_bn"
+  type: "BatchNorm"
+  bottom: "dense4b16_concat"
+  top: "dense4a17_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a17_scale"
+  type: "Scale"
+  bottom: "dense4a17_bn"
+  top: "dense4a17_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a17_relu"
+  type: "ReLU"
+  bottom: "dense4a17_bn"
+  top: "dense4a17_bn"
+}
+layer {
+  name: "dense4a17_conv"
+  type: "Convolution"
+  bottom: "dense4a17_bn"
+  top: "dense4a17_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a17_dropout"
+  type: "Dropout"
+  bottom: "dense4a17_conv"
+  top: "dense4a17_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b17_bn"
+  type: "BatchNorm"
+  bottom: "dense4a17_dropout"
+  top: "dense4b17_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b17_scale"
+  type: "Scale"
+  bottom: "dense4b17_bn"
+  top: "dense4b17_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b17_relu"
+  type: "ReLU"
+  bottom: "dense4b17_bn"
+  top: "dense4b17_bn"
+}
+layer {
+  name: "dense4b17_conv"
+  type: "Convolution"
+  bottom: "dense4b17_bn"
+  top: "dense4b17_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b17_dropout"
+  type: "Dropout"
+  bottom: "dense4b17_conv"
+  top: "dense4b17_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b17_concat"
+  type: "Concat"
+  bottom: "dense4b16_concat"
+  bottom: "dense4b17_dropout"
+  top: "dense4b17_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a18_bn"
+  type: "BatchNorm"
+  bottom: "dense4b17_concat"
+  top: "dense4a18_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a18_scale"
+  type: "Scale"
+  bottom: "dense4a18_bn"
+  top: "dense4a18_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a18_relu"
+  type: "ReLU"
+  bottom: "dense4a18_bn"
+  top: "dense4a18_bn"
+}
+layer {
+  name: "dense4a18_conv"
+  type: "Convolution"
+  bottom: "dense4a18_bn"
+  top: "dense4a18_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a18_dropout"
+  type: "Dropout"
+  bottom: "dense4a18_conv"
+  top: "dense4a18_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b18_bn"
+  type: "BatchNorm"
+  bottom: "dense4a18_dropout"
+  top: "dense4b18_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b18_scale"
+  type: "Scale"
+  bottom: "dense4b18_bn"
+  top: "dense4b18_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b18_relu"
+  type: "ReLU"
+  bottom: "dense4b18_bn"
+  top: "dense4b18_bn"
+}
+layer {
+  name: "dense4b18_conv"
+  type: "Convolution"
+  bottom: "dense4b18_bn"
+  top: "dense4b18_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b18_dropout"
+  type: "Dropout"
+  bottom: "dense4b18_conv"
+  top: "dense4b18_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b18_concat"
+  type: "Concat"
+  bottom: "dense4b17_concat"
+  bottom: "dense4b18_dropout"
+  top: "dense4b18_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a19_bn"
+  type: "BatchNorm"
+  bottom: "dense4b18_concat"
+  top: "dense4a19_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a19_scale"
+  type: "Scale"
+  bottom: "dense4a19_bn"
+  top: "dense4a19_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a19_relu"
+  type: "ReLU"
+  bottom: "dense4a19_bn"
+  top: "dense4a19_bn"
+}
+layer {
+  name: "dense4a19_conv"
+  type: "Convolution"
+  bottom: "dense4a19_bn"
+  top: "dense4a19_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a19_dropout"
+  type: "Dropout"
+  bottom: "dense4a19_conv"
+  top: "dense4a19_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b19_bn"
+  type: "BatchNorm"
+  bottom: "dense4a19_dropout"
+  top: "dense4b19_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b19_scale"
+  type: "Scale"
+  bottom: "dense4b19_bn"
+  top: "dense4b19_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b19_relu"
+  type: "ReLU"
+  bottom: "dense4b19_bn"
+  top: "dense4b19_bn"
+}
+layer {
+  name: "dense4b19_conv"
+  type: "Convolution"
+  bottom: "dense4b19_bn"
+  top: "dense4b19_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b19_dropout"
+  type: "Dropout"
+  bottom: "dense4b19_conv"
+  top: "dense4b19_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b19_concat"
+  type: "Concat"
+  bottom: "dense4b18_concat"
+  bottom: "dense4b19_dropout"
+  top: "dense4b19_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a20_bn"
+  type: "BatchNorm"
+  bottom: "dense4b19_concat"
+  top: "dense4a20_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a20_scale"
+  type: "Scale"
+  bottom: "dense4a20_bn"
+  top: "dense4a20_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a20_relu"
+  type: "ReLU"
+  bottom: "dense4a20_bn"
+  top: "dense4a20_bn"
+}
+layer {
+  name: "dense4a20_conv"
+  type: "Convolution"
+  bottom: "dense4a20_bn"
+  top: "dense4a20_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a20_dropout"
+  type: "Dropout"
+  bottom: "dense4a20_conv"
+  top: "dense4a20_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b20_bn"
+  type: "BatchNorm"
+  bottom: "dense4a20_dropout"
+  top: "dense4b20_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b20_scale"
+  type: "Scale"
+  bottom: "dense4b20_bn"
+  top: "dense4b20_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b20_relu"
+  type: "ReLU"
+  bottom: "dense4b20_bn"
+  top: "dense4b20_bn"
+}
+layer {
+  name: "dense4b20_conv"
+  type: "Convolution"
+  bottom: "dense4b20_bn"
+  top: "dense4b20_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b20_dropout"
+  type: "Dropout"
+  bottom: "dense4b20_conv"
+  top: "dense4b20_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b20_concat"
+  type: "Concat"
+  bottom: "dense4b19_concat"
+  bottom: "dense4b20_dropout"
+  top: "dense4b20_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a21_bn"
+  type: "BatchNorm"
+  bottom: "dense4b20_concat"
+  top: "dense4a21_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a21_scale"
+  type: "Scale"
+  bottom: "dense4a21_bn"
+  top: "dense4a21_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a21_relu"
+  type: "ReLU"
+  bottom: "dense4a21_bn"
+  top: "dense4a21_bn"
+}
+layer {
+  name: "dense4a21_conv"
+  type: "Convolution"
+  bottom: "dense4a21_bn"
+  top: "dense4a21_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a21_dropout"
+  type: "Dropout"
+  bottom: "dense4a21_conv"
+  top: "dense4a21_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b21_bn"
+  type: "BatchNorm"
+  bottom: "dense4a21_dropout"
+  top: "dense4b21_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b21_scale"
+  type: "Scale"
+  bottom: "dense4b21_bn"
+  top: "dense4b21_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b21_relu"
+  type: "ReLU"
+  bottom: "dense4b21_bn"
+  top: "dense4b21_bn"
+}
+layer {
+  name: "dense4b21_conv"
+  type: "Convolution"
+  bottom: "dense4b21_bn"
+  top: "dense4b21_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b21_dropout"
+  type: "Dropout"
+  bottom: "dense4b21_conv"
+  top: "dense4b21_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b21_concat"
+  type: "Concat"
+  bottom: "dense4b20_concat"
+  bottom: "dense4b21_dropout"
+  top: "dense4b21_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a22_bn"
+  type: "BatchNorm"
+  bottom: "dense4b21_concat"
+  top: "dense4a22_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a22_scale"
+  type: "Scale"
+  bottom: "dense4a22_bn"
+  top: "dense4a22_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a22_relu"
+  type: "ReLU"
+  bottom: "dense4a22_bn"
+  top: "dense4a22_bn"
+}
+layer {
+  name: "dense4a22_conv"
+  type: "Convolution"
+  bottom: "dense4a22_bn"
+  top: "dense4a22_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a22_dropout"
+  type: "Dropout"
+  bottom: "dense4a22_conv"
+  top: "dense4a22_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b22_bn"
+  type: "BatchNorm"
+  bottom: "dense4a22_dropout"
+  top: "dense4b22_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b22_scale"
+  type: "Scale"
+  bottom: "dense4b22_bn"
+  top: "dense4b22_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b22_relu"
+  type: "ReLU"
+  bottom: "dense4b22_bn"
+  top: "dense4b22_bn"
+}
+layer {
+  name: "dense4b22_conv"
+  type: "Convolution"
+  bottom: "dense4b22_bn"
+  top: "dense4b22_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b22_dropout"
+  type: "Dropout"
+  bottom: "dense4b22_conv"
+  top: "dense4b22_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b22_concat"
+  type: "Concat"
+  bottom: "dense4b21_concat"
+  bottom: "dense4b22_dropout"
+  top: "dense4b22_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a23_bn"
+  type: "BatchNorm"
+  bottom: "dense4b22_concat"
+  top: "dense4a23_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a23_scale"
+  type: "Scale"
+  bottom: "dense4a23_bn"
+  top: "dense4a23_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a23_relu"
+  type: "ReLU"
+  bottom: "dense4a23_bn"
+  top: "dense4a23_bn"
+}
+layer {
+  name: "dense4a23_conv"
+  type: "Convolution"
+  bottom: "dense4a23_bn"
+  top: "dense4a23_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a23_dropout"
+  type: "Dropout"
+  bottom: "dense4a23_conv"
+  top: "dense4a23_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b23_bn"
+  type: "BatchNorm"
+  bottom: "dense4a23_dropout"
+  top: "dense4b23_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b23_scale"
+  type: "Scale"
+  bottom: "dense4b23_bn"
+  top: "dense4b23_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b23_relu"
+  type: "ReLU"
+  bottom: "dense4b23_bn"
+  top: "dense4b23_bn"
+}
+layer {
+  name: "dense4b23_conv"
+  type: "Convolution"
+  bottom: "dense4b23_bn"
+  top: "dense4b23_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b23_dropout"
+  type: "Dropout"
+  bottom: "dense4b23_conv"
+  top: "dense4b23_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b23_concat"
+  type: "Concat"
+  bottom: "dense4b22_concat"
+  bottom: "dense4b23_dropout"
+  top: "dense4b23_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a24_bn"
+  type: "BatchNorm"
+  bottom: "dense4b23_concat"
+  top: "dense4a24_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a24_scale"
+  type: "Scale"
+  bottom: "dense4a24_bn"
+  top: "dense4a24_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a24_relu"
+  type: "ReLU"
+  bottom: "dense4a24_bn"
+  top: "dense4a24_bn"
+}
+layer {
+  name: "dense4a24_conv"
+  type: "Convolution"
+  bottom: "dense4a24_bn"
+  top: "dense4a24_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a24_dropout"
+  type: "Dropout"
+  bottom: "dense4a24_conv"
+  top: "dense4a24_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b24_bn"
+  type: "BatchNorm"
+  bottom: "dense4a24_dropout"
+  top: "dense4b24_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b24_scale"
+  type: "Scale"
+  bottom: "dense4b24_bn"
+  top: "dense4b24_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b24_relu"
+  type: "ReLU"
+  bottom: "dense4b24_bn"
+  top: "dense4b24_bn"
+}
+layer {
+  name: "dense4b24_conv"
+  type: "Convolution"
+  bottom: "dense4b24_bn"
+  top: "dense4b24_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b24_dropout"
+  type: "Dropout"
+  bottom: "dense4b24_conv"
+  top: "dense4b24_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b24_concat"
+  type: "Concat"
+  bottom: "dense4b23_concat"
+  bottom: "dense4b24_dropout"
+  top: "dense4b24_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a25_bn"
+  type: "BatchNorm"
+  bottom: "dense4b24_concat"
+  top: "dense4a25_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a25_scale"
+  type: "Scale"
+  bottom: "dense4a25_bn"
+  top: "dense4a25_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a25_relu"
+  type: "ReLU"
+  bottom: "dense4a25_bn"
+  top: "dense4a25_bn"
+}
+layer {
+  name: "dense4a25_conv"
+  type: "Convolution"
+  bottom: "dense4a25_bn"
+  top: "dense4a25_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a25_dropout"
+  type: "Dropout"
+  bottom: "dense4a25_conv"
+  top: "dense4a25_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b25_bn"
+  type: "BatchNorm"
+  bottom: "dense4a25_dropout"
+  top: "dense4b25_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b25_scale"
+  type: "Scale"
+  bottom: "dense4b25_bn"
+  top: "dense4b25_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b25_relu"
+  type: "ReLU"
+  bottom: "dense4b25_bn"
+  top: "dense4b25_bn"
+}
+layer {
+  name: "dense4b25_conv"
+  type: "Convolution"
+  bottom: "dense4b25_bn"
+  top: "dense4b25_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b25_dropout"
+  type: "Dropout"
+  bottom: "dense4b25_conv"
+  top: "dense4b25_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b25_concat"
+  type: "Concat"
+  bottom: "dense4b24_concat"
+  bottom: "dense4b25_dropout"
+  top: "dense4b25_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a26_bn"
+  type: "BatchNorm"
+  bottom: "dense4b25_concat"
+  top: "dense4a26_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a26_scale"
+  type: "Scale"
+  bottom: "dense4a26_bn"
+  top: "dense4a26_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a26_relu"
+  type: "ReLU"
+  bottom: "dense4a26_bn"
+  top: "dense4a26_bn"
+}
+layer {
+  name: "dense4a26_conv"
+  type: "Convolution"
+  bottom: "dense4a26_bn"
+  top: "dense4a26_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a26_dropout"
+  type: "Dropout"
+  bottom: "dense4a26_conv"
+  top: "dense4a26_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b26_bn"
+  type: "BatchNorm"
+  bottom: "dense4a26_dropout"
+  top: "dense4b26_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b26_scale"
+  type: "Scale"
+  bottom: "dense4b26_bn"
+  top: "dense4b26_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b26_relu"
+  type: "ReLU"
+  bottom: "dense4b26_bn"
+  top: "dense4b26_bn"
+}
+layer {
+  name: "dense4b26_conv"
+  type: "Convolution"
+  bottom: "dense4b26_bn"
+  top: "dense4b26_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b26_dropout"
+  type: "Dropout"
+  bottom: "dense4b26_conv"
+  top: "dense4b26_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b26_concat"
+  type: "Concat"
+  bottom: "dense4b25_concat"
+  bottom: "dense4b26_dropout"
+  top: "dense4b26_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a27_bn"
+  type: "BatchNorm"
+  bottom: "dense4b26_concat"
+  top: "dense4a27_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a27_scale"
+  type: "Scale"
+  bottom: "dense4a27_bn"
+  top: "dense4a27_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a27_relu"
+  type: "ReLU"
+  bottom: "dense4a27_bn"
+  top: "dense4a27_bn"
+}
+layer {
+  name: "dense4a27_conv"
+  type: "Convolution"
+  bottom: "dense4a27_bn"
+  top: "dense4a27_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a27_dropout"
+  type: "Dropout"
+  bottom: "dense4a27_conv"
+  top: "dense4a27_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b27_bn"
+  type: "BatchNorm"
+  bottom: "dense4a27_dropout"
+  top: "dense4b27_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b27_scale"
+  type: "Scale"
+  bottom: "dense4b27_bn"
+  top: "dense4b27_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b27_relu"
+  type: "ReLU"
+  bottom: "dense4b27_bn"
+  top: "dense4b27_bn"
+}
+layer {
+  name: "dense4b27_conv"
+  type: "Convolution"
+  bottom: "dense4b27_bn"
+  top: "dense4b27_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b27_dropout"
+  type: "Dropout"
+  bottom: "dense4b27_conv"
+  top: "dense4b27_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b27_concat"
+  type: "Concat"
+  bottom: "dense4b26_concat"
+  bottom: "dense4b27_dropout"
+  top: "dense4b27_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a28_bn"
+  type: "BatchNorm"
+  bottom: "dense4b27_concat"
+  top: "dense4a28_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a28_scale"
+  type: "Scale"
+  bottom: "dense4a28_bn"
+  top: "dense4a28_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a28_relu"
+  type: "ReLU"
+  bottom: "dense4a28_bn"
+  top: "dense4a28_bn"
+}
+layer {
+  name: "dense4a28_conv"
+  type: "Convolution"
+  bottom: "dense4a28_bn"
+  top: "dense4a28_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a28_dropout"
+  type: "Dropout"
+  bottom: "dense4a28_conv"
+  top: "dense4a28_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b28_bn"
+  type: "BatchNorm"
+  bottom: "dense4a28_dropout"
+  top: "dense4b28_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b28_scale"
+  type: "Scale"
+  bottom: "dense4b28_bn"
+  top: "dense4b28_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b28_relu"
+  type: "ReLU"
+  bottom: "dense4b28_bn"
+  top: "dense4b28_bn"
+}
+layer {
+  name: "dense4b28_conv"
+  type: "Convolution"
+  bottom: "dense4b28_bn"
+  top: "dense4b28_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b28_dropout"
+  type: "Dropout"
+  bottom: "dense4b28_conv"
+  top: "dense4b28_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b28_concat"
+  type: "Concat"
+  bottom: "dense4b27_concat"
+  bottom: "dense4b28_dropout"
+  top: "dense4b28_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a29_bn"
+  type: "BatchNorm"
+  bottom: "dense4b28_concat"
+  top: "dense4a29_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a29_scale"
+  type: "Scale"
+  bottom: "dense4a29_bn"
+  top: "dense4a29_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a29_relu"
+  type: "ReLU"
+  bottom: "dense4a29_bn"
+  top: "dense4a29_bn"
+}
+layer {
+  name: "dense4a29_conv"
+  type: "Convolution"
+  bottom: "dense4a29_bn"
+  top: "dense4a29_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a29_dropout"
+  type: "Dropout"
+  bottom: "dense4a29_conv"
+  top: "dense4a29_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b29_bn"
+  type: "BatchNorm"
+  bottom: "dense4a29_dropout"
+  top: "dense4b29_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b29_scale"
+  type: "Scale"
+  bottom: "dense4b29_bn"
+  top: "dense4b29_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b29_relu"
+  type: "ReLU"
+  bottom: "dense4b29_bn"
+  top: "dense4b29_bn"
+}
+layer {
+  name: "dense4b29_conv"
+  type: "Convolution"
+  bottom: "dense4b29_bn"
+  top: "dense4b29_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b29_dropout"
+  type: "Dropout"
+  bottom: "dense4b29_conv"
+  top: "dense4b29_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b29_concat"
+  type: "Concat"
+  bottom: "dense4b28_concat"
+  bottom: "dense4b29_dropout"
+  top: "dense4b29_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a30_bn"
+  type: "BatchNorm"
+  bottom: "dense4b29_concat"
+  top: "dense4a30_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a30_scale"
+  type: "Scale"
+  bottom: "dense4a30_bn"
+  top: "dense4a30_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a30_relu"
+  type: "ReLU"
+  bottom: "dense4a30_bn"
+  top: "dense4a30_bn"
+}
+layer {
+  name: "dense4a30_conv"
+  type: "Convolution"
+  bottom: "dense4a30_bn"
+  top: "dense4a30_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a30_dropout"
+  type: "Dropout"
+  bottom: "dense4a30_conv"
+  top: "dense4a30_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b30_bn"
+  type: "BatchNorm"
+  bottom: "dense4a30_dropout"
+  top: "dense4b30_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b30_scale"
+  type: "Scale"
+  bottom: "dense4b30_bn"
+  top: "dense4b30_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b30_relu"
+  type: "ReLU"
+  bottom: "dense4b30_bn"
+  top: "dense4b30_bn"
+}
+layer {
+  name: "dense4b30_conv"
+  type: "Convolution"
+  bottom: "dense4b30_bn"
+  top: "dense4b30_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b30_dropout"
+  type: "Dropout"
+  bottom: "dense4b30_conv"
+  top: "dense4b30_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b30_concat"
+  type: "Concat"
+  bottom: "dense4b29_concat"
+  bottom: "dense4b30_dropout"
+  top: "dense4b30_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a31_bn"
+  type: "BatchNorm"
+  bottom: "dense4b30_concat"
+  top: "dense4a31_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a31_scale"
+  type: "Scale"
+  bottom: "dense4a31_bn"
+  top: "dense4a31_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a31_relu"
+  type: "ReLU"
+  bottom: "dense4a31_bn"
+  top: "dense4a31_bn"
+}
+layer {
+  name: "dense4a31_conv"
+  type: "Convolution"
+  bottom: "dense4a31_bn"
+  top: "dense4a31_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a31_dropout"
+  type: "Dropout"
+  bottom: "dense4a31_conv"
+  top: "dense4a31_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b31_bn"
+  type: "BatchNorm"
+  bottom: "dense4a31_dropout"
+  top: "dense4b31_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b31_scale"
+  type: "Scale"
+  bottom: "dense4b31_bn"
+  top: "dense4b31_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b31_relu"
+  type: "ReLU"
+  bottom: "dense4b31_bn"
+  top: "dense4b31_bn"
+}
+layer {
+  name: "dense4b31_conv"
+  type: "Convolution"
+  bottom: "dense4b31_bn"
+  top: "dense4b31_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b31_dropout"
+  type: "Dropout"
+  bottom: "dense4b31_conv"
+  top: "dense4b31_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b31_concat"
+  type: "Concat"
+  bottom: "dense4b30_concat"
+  bottom: "dense4b31_dropout"
+  top: "dense4b31_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4a32_bn"
+  type: "BatchNorm"
+  bottom: "dense4b31_concat"
+  top: "dense4a32_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4a32_scale"
+  type: "Scale"
+  bottom: "dense4a32_bn"
+  top: "dense4a32_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4a32_relu"
+  type: "ReLU"
+  bottom: "dense4a32_bn"
+  top: "dense4a32_bn"
+}
+layer {
+  name: "dense4a32_conv"
+  type: "Convolution"
+  bottom: "dense4a32_bn"
+  top: "dense4a32_conv"
+  convolution_param {
+    num_output: 128
+    bias_term: false
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dense4a32_dropout"
+  type: "Dropout"
+  bottom: "dense4a32_conv"
+  top: "dense4a32_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b32_bn"
+  type: "BatchNorm"
+  bottom: "dense4a32_dropout"
+  top: "dense4b32_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b32_scale"
+  type: "Scale"
+  bottom: "dense4b32_bn"
+  top: "dense4b32_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b32_relu"
+  type: "ReLU"
+  bottom: "dense4b32_bn"
+  top: "dense4b32_bn"
+}
+layer {
+  name: "dense4b32_conv"
+  type: "Convolution"
+  bottom: "dense4b32_bn"
+  top: "dense4b32_conv"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dense4b32_dropout"
+  type: "Dropout"
+  bottom: "dense4b32_conv"
+  top: "dense4b32_dropout"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "dense4b32_concat"
+  type: "Concat"
+  bottom: "dense4b31_concat"
+  bottom: "dense4b32_dropout"
+  top: "dense4b32_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "dense4b32_concat_bn"
+  type: "BatchNorm"
+  bottom: "dense4b32_concat"
+  top: "dense4b32_concat_bn"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "dense4b32_concat_scale"
+  type: "Scale"
+  bottom: "dense4b32_concat_bn"
+  top: "dense4b32_concat_bn"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "dense4b32_concat_relu"
+  type: "ReLU"
+  bottom: "dense4b32_concat_bn"
+  top: "dense4b32_concat_bn"
+}
+layer {
+  name: "pool5"
+  type: "Pooling"
+  bottom: "dense4b32_concat_bn"
+  top: "pool5"
+  pooling_param {
+    pool: AVE
+    global_pooling: true
+  }
+}
+layer {
+  name: "classifier"
+  type: "InnerProduct"
+  bottom: "pool5"
+  top: "classifier"
+  inner_product_param {
+    num_output: 1000
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "classifier"
+  top: "prob"
+}
