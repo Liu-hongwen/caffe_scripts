@@ -1,0 +1,25 @@
+train_net: "./proto/train.prototxt"
+test_net: "./proto/test.prototxt"
+test_iter: 100
+test_interval: 30000
+base_lr: 0.001
+display: 50
+max_iter: 12000
+lr_policy: "step"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+stepsize: 3000
+snapshot: 3000
+snapshot_prefix: "VGG_messidor_SSD_961x961"
+solver_mode: GPU
+device_id: 0
+debug_info: false
+snapshot_after_train: true
+test_initialization: false
+average_loss: 50
+iter_size: 4
+type: "SGD"
+eval_type: "detection"
+ap_version: "11point"
+
